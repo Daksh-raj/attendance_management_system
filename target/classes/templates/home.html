@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himalayan Residential School - Home</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            color: #222;
+        }
+        .announcement-bar {
+            background: #2d6cdf;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s;
+        }
+        .announcement-link {
+            color: #ffe066;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-40px); opacity: 0;}
+            to { transform: translateY(0); opacity: 1;}
+        }
+        .main-flex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 10px 0 10px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 4px 32px rgba(44, 62, 80, 0.08);
+            padding: 40px 32px 32px 32px;
+            max-width: 540px;
+            width: 100%;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+        .school-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .school-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e0eafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #2d6cdf;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        }
+        .school-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d6cdf;
+            letter-spacing: 1px;
+        }
+        #greeting {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 0 0 10px 0;
+            font-weight: 500;
+        }
+        .elite-divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #2d6cdf 0%, #ffe066 100%);
+            border-radius: 2px;
+            margin: 0 auto 30px auto;
+        }
+        .roles {
+            display: flex;
+            justify-content: space-around;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .role-card {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+            width: 130px;
+            height: 170px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.18s, box-shadow 0.18s;
+            position: relative;
+            overflow: hidden;
+        }
+        .role-card:hover {
+            transform: translateY(-8px) scale(1.05) rotate(-2deg);
+            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.11);
+            background: linear-gradient(135deg, #fda085 0%, #f6d365 100%);
+        }
+        .role-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        .role-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d6cdf;
+        }
+        .role-tip {
+            font-size: 0.85rem;
+            color: #444;
+            background: rgba(255,255,255,0.85);
+            border-radius: 8px;
+            padding: 4px 8px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+        }
+        .role-card:hover .role-tip {
+            opacity: 1;
+        }
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 18px 0 24px 0;
+            flex-wrap: wrap;
+        }
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #2d6cdf;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.08);
+            transition: background 0.18s, transform 0.18s;
+        }
+        .quick-link:hover {
+            background: #163a6d;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .school-carousel {
+            position: relative;
+            width: 100%;
+            height: 170px;
+            margin: 0 auto 24px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(44,62,80,0.07);
+            background: #e0eafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+            transition: opacity 0.6s;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 18px;
+            left: 20px;
+            background: rgba(45,108,223,0.90);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.12);
+        }
+        .leaderboard {
+            background: #f0f6ff;
+            border-radius: 12px;
+            padding: 14px 18px 10px 18px;
+            margin: 0 auto 16px auto;
+            max-width: 330px;
+            box-shadow: 0 1px 6px rgba(44,62,80,0.05);
+        }
+        .leaderboard h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #2d6cdf;
+        }
+        .leaderboard ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .leaderboard li {
+            font-size: 0.98rem;
+            color: #333;
+            margin-bottom: 4px;
+            padding-left: 10px;
+            position: relative;
+        }
+        .leaderboard li::before {
+            content: "★";
+            color: #ffe066;
+            position: absolute;
+            left: -10px;
+            top: 0;
+        }
+        footer {
+            background: #2d6cdf;
+            color: #fff;
+            padding: 28px 10px 18px 10px;
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: auto;
+        }
+        .footer-contact a, .footer-social a {
+            color: #ffe066;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .footer-social {
+            margin-top: 10px;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 6vw 24px 6vw;
+                max-width: 98vw;
+            }
+            .roles {
+                gap: 16px;
+            }
+            .school-carousel {
+                height: 120px;
+            }
+            .carousel-image {
+                height: 120px;
+            }
+        }
+        @media (max-width: 500px) {
+            .roles {
+                flex-direction: column;
+                align-items: center;
+            }
+            .role-card {
+                width: 95vw;
+                max-width: 320px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="announcement-bar">
+        📢 Admissions for 2025 are now open!
+        <a href="/admissions" class="announcement-link">Learn More</a>
+    </div>
+    <div class="main-flex">
+        <div class="container">
+            <div class="school-banner">
+                <div class="school-logo">🏫</div>
+                <div class="school-title">Himalayan Residential School</div>
+            </div>
+            <h1 id="greeting">Welcome! Choose Your Role</h1>
+            <div class="elite-divider"></div>
+            <div class="roles">
+                <!-- Role Card: Student -->
+                <div class="role-card" onclick="window.location.href='/studentspage'">
+                    <span class="role-icon" aria-label="Student">🎓</span>
+                    <span class="role-title">Student</span>
+                    <span class="role-tip">Check your assignments and progress!</span>
+                </div>
+                <!-- Role Card: Teacher -->
+                <div class="role-card" onclick="window.location.href='/teacher'">
+                    <span class="role-icon" aria-label="Teacher">👩‍🏫</span>
+                    <span class="role-title">Teacher</span>
+                    <span class="role-tip">Plan lessons and connect with students!</span>
+                </div>
+                <!-- Role Card: Admin -->
+                <div class="role-card" onclick="window.location.href='/admin/login'">
+                    <span class="role-icon" aria-label="Admin">🛠️</span>
+                    <span class="role-title">Admin</span>
+                    <span class="role-tip">Manage school resources and users!</span>
+                </div>
+            </div>
+            <div class="quick-links">
+                <a href="/calendar" class="quick-link"><span>📅</span> Calendar</a>
+                <a href="/news" class="quick-link"><span>📰</span> News</a>
+                <a href="/library" class="quick-link"><span>📚</span> Library</a>
+                <a href="/support" class="quick-link"><span>💬</span> Help</a>
+            </div>
+            <div class="school-carousel" id="carousel">
+                <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80"
+                     alt="Annual Sports Day" class="carousel-image" id="carousel-img">
+                <div class="carousel-caption" id="carousel-caption">Annual Sports Day Highlights</div>
+            </div>
+            <div class="leaderboard">
+                <h3>🏆 Recent Achievers</h3>
+                <ul>
+                    <li>Priya S. (Student of the Month)</li>
+                    <li>Mr. R. Kumar (Best Lesson Planner)</li>
+                    <li>Class 10B (Top Attendance)</li>
+                </ul>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-contact">
+                Himalayan Residential School, Dehradun<br>
+                📞 <a href="tel:+911234567890">+91 12345 67890</a> | ✉️ <a href="mailto:info@himalayanrs.edu">info@himalayanrs.edu</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><span>🔗</span> Facebook</a>
+                <a href="#"><span>🔗</span> Instagram</a>
+                <a href="#"><span>🔗</span> LinkedIn</a>
+            </div>
+        </footer>
+    </div>
+    <script>
+        // Greeting based on time of day
+        const greeting = document.getElementById('greeting');
+        const hour = new Date().getHours();
+        let greetText = "Welcome! Choose Your Role";
+        if(hour < 12) greetText = "Good Morning! Choose Your Role";
+        else if(hour < 18) greetText = "Good Afternoon! Choose Your Role";
+        else greetText = "Good Evening! Choose Your Role";
+        greeting.textContent = greetText;
+
+        // Simple Carousel Logic
+        const carouselImages = [
+            {
+                src: "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80",
+                caption: "Annual Sports Day Highlights"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80",
+                caption: "Science Exhibition Winners"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80",
+                caption: "Teacher's Workshop"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
+                caption: "Library Week Activities"
+            }
+        ];
+        let carouselIdx = 0;
+        const carouselImg = document.getElementById('carousel-img');
+        const carouselCaption = document.getElementById('carousel-caption');
+        setInterval(() => {
+            carouselIdx = (carouselIdx + 1) % carouselImages.length;
+            carouselImg.style.opacity = 0;
+            carouselCaption.style.opacity = 0;
+            setTimeout(() => {
+                carouselImg.src = carouselImages[carouselIdx].src;
+                carouselCaption.textContent = carouselImages[carouselIdx].caption;
+                carouselImg.style.opacity = 1;
+                carouselCaption.style.opacity = 1;
+            }, 600);
+        }, 3500);
+    </script>
+</body>
+</html>

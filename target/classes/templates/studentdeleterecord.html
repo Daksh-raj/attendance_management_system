@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Student Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for Modern Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 2.5rem 2rem;
+      width: 350px;
+      animation: fadeIn 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(40px) scale(0.95);}
+      100% { opacity: 1; transform: translateY(0) scale(1);}
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #222;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.7);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      font-size: 1rem;
+      transition: box-shadow 0.2s;
+      outline: none;
+      color: #333;
+    }
+
+    input:focus, select:focus {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.9);
+    }
+
+    .delete-btn {
+      width: 100%;
+      padding: 0.9rem 0;
+      background: linear-gradient(90deg, #ff5858 0%, #f09819 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 24px rgba(255,88,88,0.18);
+      transition: background 0.3s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .delete-btn:active {
+      transform: scale(0.97);
+    }
+
+    .delete-btn::after {
+      content: '';
+      position: absolute;
+      left: -75%;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transform: skewX(-20deg);
+      transition: left 0.4s cubic-bezier(0.4,0,0.2,1);
+      z-index: 1;
+    }
+
+    .delete-btn:hover::after {
+      left: 120%;
+    }
+
+    /* Floating Bubbles Animation for Background */
+    .bubbles {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 50%;
+      animation: floatBubble 12s linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes floatBubble {
+      0% { transform: translateY(0) scale(1);}
+      100% { transform: translateY(-110vh) scale(1.2);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Bubbles Background -->
+  <div class="bubbles"></div>
+
+  <div class="container">
+    <h2>Delete Student</h2>
+    <form id="deleteForm" autocomplete="off" action="/admin/students/deletestudentrecord" method="post">
+      <div class="form-group">
+        <label for="rollno">Roll Number</label>
+        <input type="number" id="rollno" name="rollno" placeholder="Enter Roll Number" required pattern="\d+">
+      </div>
+      <div class="form-group">
+        <label for="class">Class</label>
+        <select id="class" name="standard" required>
+          <option value="" disabled selected>Select Class</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>  
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <!-- Add more classes as needed -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="section">Section</label>
+        <select id="section" name="section" required>
+          <option value="" disabled selected>Select Section</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <!-- Add more sections as needed -->
+        </select>
+      </div>
+      <button class="delete-btn" type="submit">Delete Student</button>
+    </form>
+  </div>
+
+  <script>
+    // Bubbles Animation
+    const bubblesContainer = document.querySelector('.bubbles');
+    for(let i=0; i<18; i++){
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      const size = Math.random() * 60 + 30;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${Math.random() * 100}vw`;
+      bubble.style.animationDuration = `${8 + Math.random() * 6}s`;
+      bubble.style.opacity = 0.2 + Math.random() * 0.5;
+      bubblesContainer.appendChild(bubble);
+    }
+
+  </script>
+</body>
+</html>

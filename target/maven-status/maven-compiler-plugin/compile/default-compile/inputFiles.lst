@@ -1,0 +1,16 @@
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\controller\AdminController.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\controller\StudentController.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\controller\TeacherController.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\DemoApplication.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\model\Admin.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\model\Attendance.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\model\Student.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\model\Teacher.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\repository\AdminRepository.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\repository\AttendanceRepository.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\repository\StudentRepository.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\repository\TeacherRepository.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\service\AdminService.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\service\AttendanceService.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\service\StudentService.java
+C:\Users\Dell\Downloads\demo\studentAttendanceManagementSystem\src\main\java\com\example\demo\service\TeacherService.java

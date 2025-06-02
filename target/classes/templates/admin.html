@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            animation: slideDown 1s cubic-bezier(.77,0,.18,1);
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-60px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .logout-btn {
+            background: #ff4b2b;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px #ff4b2b33;
+        }
+        .logout-btn:hover {
+            background: #ff1c00;
+            box-shadow: 0 4px 16px #ff4b2b55;
+            transform: scale(1.05);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        .title {
+            color: #fff;
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px #00000033;
+            animation: popIn 1s cubic-bezier(.77,0,.18,1);
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8);}
+            80% { opacity: 1; transform: scale(1.08);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+        .card-group {
+            display: flex;
+            gap: 40px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            padding: 40px 30px;
+            width: 260px;
+            text-align: center;
+            transition: transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s, background 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 1.2s cubic-bezier(.77,0,.18,1);
+        }
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(40px) scale(0.96);}
+            to { opacity: 1; transform: translateY(0) scale(1);}
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #2575fc33 60%, transparent 100%);
+            z-index: 0;
+            transition: opacity 0.3s;
+            opacity: 0.7;
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.05) rotate(-1deg);
+            box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.25), 0 0 0 4px #2575fc22;
+            background: linear-gradient(120deg, #f8faff 80%, #e3f0ff 100%);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 18px;
+            color: #2575fc;
+            animation: iconBounce 1.2s infinite alternate;
+        }
+        @keyframes iconBounce {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-8px);}
+        }
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            letter-spacing: 1px;
+        }
+        .card-desc {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+            min-height: 48px;
+        }
+        .card-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #2575fc 60%, #6a11cb 100%);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px #2575fc33;
+            position: relative;
+            z-index: 1;
+        }
+        .card-link:hover {
+            background: linear-gradient(90deg, #6a11cb 60%, #2575fc 100%);
+            box-shadow: 0 4px 16px #6a11cb55;
+            transform: scale(1.06);
+        }
+        @media (max-width: 700px) {
+            .card-group {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .container {
+                height: auto;
+                margin-top: 40px;
+            }
+        }
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.18;
+            background: #fff;
+            animation: floatParticle 12s linear infinite;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(0) scale(1);}
+            100% { transform: translateY(-120vh) scale(1.2);}
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="navbar">
+        <form action="/admin/logout" method="get" style="margin:0;">
+            <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="title">Welcome, Admin</div>
+        <div class="card-group">
+            <div class="card" tabindex="0" onclick="window.location.href='/admin/teachers'">
+                <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="card-title">Teachers</div>
+                <div class="card-desc">Manage teacher accounts, view details, and assign roles.</div>
+                <a href="/admin/teachers" class="card-link">Go to Teachers</a>
+            </div>
+            <div class="card" tabindex="0" onclick="window.location.href='/admin/students'">
+                <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+                <div class="card-title">Students</div>
+                <div class="card-desc">Manage student records, view progress, and more.</div>
+                <a href="/admin/students" class="card-link">Go to Students</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Floating particles animation
+        const particles = document.querySelector('.particles');
+        for (let i = 0; i < 18; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 18 + 12;
+            p.style.width = p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = (Math.random() * 100 + 20) + 'vh';
+            p.style.animationDuration = (8 + Math.random() * 8) + 's';
+            p.style.background = `rgba(255,255,255,${0.08 + Math.random() * 0.18})`;
+            particles.appendChild(p);
+        }
+
+        // Keyboard accessibility for cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    this.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unexpected Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #f8d7da 0%, #ffe3e6 100%);
+            color: #721c24;
+            font-family: 'Roboto', Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            background: #fff;
+            border: 1px solid #f5c6cb;
+            padding: 48px 64px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(220, 53, 69, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.7) translateY(60px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            animation: shake 1.2s infinite alternate;
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(-8deg);}
+            100% { transform: rotate(8deg);}
+        }
+
+        h1 {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2.7em;
+            margin-bottom: 12px;
+            color: #c82333;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s;
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-top: 0;
+            margin-bottom: 24px;
+            color: #721c24;
+            animation: fadeIn 1.2s;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0;}
+            100% { opacity: 1;}
+        }
+
+        .retry-btn {
+            background: linear-gradient(90deg, #f44336 0%, #e57373 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 1em;
+            font-family: 'Montserrat', Arial, sans-serif;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.12);
+            transition: background 0.3s, transform 0.2s;
+            outline: none;
+        }
+
+        .retry-btn:hover {
+            background: linear-gradient(90deg, #e53935 0%, #ff8a80 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        @media (max-width: 600px) {
+            .error-container {
+                padding: 32px 10vw;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .error-icon {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <svg class="error-icon" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="#f8d7da" stroke="#f5c6cb" stroke-width="4"/>
+            <line x1="20" y1="20" x2="44" y2="44" stroke="#c82333" stroke-width="4" stroke-linecap="round"/>
+            <line x1="44" y1="20" x2="20" y2="44" stroke="#c82333" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <h1>Unexpected Error Occurred</h1>
+        <p>Sorry, something went wrong.<br>
+           Please try again later, or check your credentials once more!</p>
+        <button class="retry-btn" onclick="window.location.reload()">Try Again</button>
+    </div>
+</body>
+</html>

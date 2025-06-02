@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0ffe0 0%, #f6fff6 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .success-container {
+            background: #fff;
+            border: 1px solid #b2ffb2;
+            padding: 48px 72px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.12);
+            text-align: center;
+            animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+            position: relative;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .success-icon {
+            font-size: 64px;
+            color: #4BB543;
+            margin-bottom: 24px;
+            animation: bounce 1.2s infinite alternate;
+            display: inline-block;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-12px);}
+        }
+        h1 {
+            margin: 0 0 12px 0;
+            color: #2e7d32;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 28px;
+        }
+        .btn-home {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(90deg, #4BB543 60%, #81c784 100%);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10);
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+        .btn-home:hover {
+            background: linear-gradient(90deg, #388e3c 60%, #66bb6a 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+        /* Confetti animation */
+        .confetti {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px; height: 18px;
+            background: #4BB543;
+            opacity: 0.8;
+            border-radius: 3px;
+            animation: confetti-fall 2.2s linear forwards;
+        }
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(220px) rotateZ(360deg);
+                opacity: 0.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="confetti" id="confetti"></div>
+        <div class="success-icon">&#10004;</div>
+        <h1>Success!</h1>
+        <p>Student added successfully!</p>
+        <a href="/" class="btn-home">Go to Home</a>
+    </div>
+    <script>
+        // Confetti animation
+        function randomColor() {
+            const colors = ['#4BB543', '#81c784', '#b2ffb2', '#388e3c', '#a5d6a7'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        function createConfettiPiece(container) {
+            const piece = document.createElement('div');
+            piece.classList.add('confetti-piece');
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.background = randomColor();
+            piece.style.animationDuration = (1.5 + Math.random() * 1.2) + 's';
+            piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+            container.appendChild(piece);
+            setTimeout(() => piece.remove(), 2200);
+        }
+        window.onload = function() {
+            const confetti = document.getElementById('confetti');
+            for (let i = 0; i < 24; i++) {
+                setTimeout(() => createConfettiPiece(confetti), i * 80);
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #232526 0%, #414345 100%);
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 22px;
+            box-shadow: 0 10px 40px 0 rgba(30, 60, 114, 0.25);
+            padding: 2.8rem 2.2rem 2.2rem 2.2rem;
+            width: 370px;
+            animation: fadeIn 1s cubic-bezier(.39,.575,.56,1);
+            position: relative;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.2rem;
+        }
+        .login-header h2 {
+            margin: 0;
+            font-weight: 700;
+            color: #232526;
+            letter-spacing: 1.5px;
+            font-size: 2.1rem;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 1.7rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 1.1rem 2.7rem 1.1rem 1.1rem;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+            font-size: 1.08rem;
+            background: #f4f6fb;
+            transition: border 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(42, 82, 152, 0.04);
+        }
+        .input-group input:focus {
+            border-color: #5a7cff;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(90, 124, 255, 0.10);
+        }
+        .input-group .fa {
+            position: absolute;
+            right: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b0b0b0;
+            font-size: 1.15rem;
+            transition: color 0.3s;
+            pointer-events: none;
+        }
+        .input-group input:focus + .fa {
+            color: #5a7cff;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(90deg, #5a7cff 0%, #232526 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.18s, box-shadow 0.2s;
+            box-shadow: 0 4px 18px rgba(90, 124, 255, 0.13);
+            letter-spacing: 0.5px;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #232526 0%, #5a7cff 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 24px rgba(90, 124, 255, 0.18);
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #888;
+            font-size: 1rem;
+            letter-spacing: 0.2px;
+        }
+        /* Floating label animation */
+        .input-group label {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            padding: 0 0.25rem;
+            color: #b0b0b0;
+            font-size: 1.08rem;
+            pointer-events: none;
+            transition: 0.18s;
+        }
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label {
+            top: -0.7rem;
+            left: 0.9rem;
+            font-size: 0.89rem;
+            color: #5a7cff;
+            background: #fff;
+            padding: 0 0.3rem;
+        }
+        /* Add a subtle logo */
+        .login-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        .login-logo i {
+            font-size: 2.7rem;
+            color: #5a7cff;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(90, 124, 255, 0.13);
+            padding: 0.7rem;
+        }
+        /* Responsive */
+        @media (max-width: 430px) {
+            .login-container {
+                width: 97vw;
+                padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <i class="fa fa-shield-alt"></i>
+        </div>
+        <div class="login-header">
+            <h2>Admin Login</h2>
+        </div>
+        <form method="post" autocomplete="off" action="/admin/login">
+            <div class="input-group">
+                <input type="text" id="username" name="username" required placeholder=" " autocomplete="username">
+                <label for="username">Username</label>
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" required placeholder=" " autocomplete="current-password">
+                <label for="password">Password</label>
+                <i class="fa fa-lock"></i>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        <div class="login-footer">
+            &copy; 2024 Admin Panel
+        </div>
+    </div>
+</body>
+</html>

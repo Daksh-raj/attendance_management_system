@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+            padding: 40px 36px 32px 36px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 18px;
+            color: #2575fc;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 28px;
+        }
+        .option-btn {
+            padding: 15px 0;
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(38, 50, 56, 0.08);
+            transition: background 0.2s, transform 0.1s;
+            text-decoration: none;
+            outline: none;
+        }
+        .option-btn:hover, .option-btn:focus {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .logout-btn {
+            background: #f44336;
+            margin-top: 10px;
+        }
+        .logout-btn:hover, .logout-btn:focus {
+            background: #c62828;
+        }
+        @media (max-width: 500px) {
+            .container { padding: 24px 8px 18px 8px; }
+            h1 { font-size: 1.3em; }
+            .option-btn { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="options">
+            <a href="/admin/teachers/teachernewrecord" class="option-btn">Create New Record</a>
+            <a href="{% url 'admin_update' %}" class="option-btn">Update Existing Record</a>
+            <a href="{% url 'admin_delete' %}" class="option-btn">Delete Record</a>
+            <a href="{% url 'admin_view' %}" class="option-btn">View All Records</a>
+        </div>
+    </div>
+</body>
+</html>

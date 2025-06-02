@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+        }
+        h1 {
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+        }
+        .form-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12);
+            transition: box-shadow 0.3s, transform 0.3s;
+            animation: fadeInUp 1s;
+        }
+        .form-card:hover {
+            box-shadow: 0 16px 48px rgba(44, 62, 80, 0.18);
+            transform: translateY(-4px) scale(1.01);
+        }
+        .form-control:focus {
+            border-color: #4e9af1;
+            box-shadow: 0 0 0 0.2rem rgba(78, 154, 241, 0.15);
+        }
+        .form-control::placeholder {
+            color: #b0b8c1;
+            opacity: 1;
+        }
+        .btn-success {
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+            border: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(67, 233, 123, 0.15);
+        }
+        .btn-success:hover {
+            background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 24px rgba(67, 233, 123, 0.18);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        .input-group-text {
+            background: #e0eafc;
+            border: none;
+        }
+        .form-floating > label {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4 text-center animate__animated animate__fadeInDown">Add Teachers</h1>
+    <form method="post" action="/admin/teachers/teachernewrecord/add" class="form-card p-4 mb-5 animate__animated animate__fadeInUp">
+        <h4 class="mb-3 text-primary animate__animated animate__fadeInLeft">Add New Teacher</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input type="text" name="name" class="form-control" id="nameInput" placeholder="Name" required>
+                    <label for="nameInput">Name</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating">
+                    <input type="text" name="subject" class="form-control" id="subjectInput" placeholder="Subject" required>
+                    <label for="subjectInput">Subject</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating">
+                    <input type="text" name="classTeacherStandard" class="form-control" id="standardInput" placeholder="Class Teacher Standard">
+                    <label for="standardInput">Class Teacher Standard</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating">
+                    <input type="text" name="classTeacherSection" class="form-control" id="sectionInput" placeholder="Class Teacher Section">
+                    <label for="sectionInput">Class Teacher Section</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <input type="email" name="email" class="form-control" id="emailInput" placeholder="Email">
+                    <label for="emailInput">Email</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating">
+                    <input type="text" name="password" class="form-control" id="passwordInput" placeholder="Password">
+                    <label for="passwordInput">Password</label>
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-success w-100 animate__animated animate__pulse animate__infinite">Add Teacher</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

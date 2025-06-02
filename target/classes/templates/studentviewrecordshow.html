@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Records</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+        body {
+            background: linear-gradient(120deg, #e0e7ff 0%, #f4f6fb 100%);
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60, 72, 88, 0.18);
+            padding: 36px 44px 44px 44px;
+            animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        h2 {
+            text-align: center;
+            color: #4e54c8;
+            margin-bottom: 32px;
+            letter-spacing: 1.5px;
+            font-size: 2.3em;
+            font-weight: 700;
+            animation: slideDown 1s cubic-bezier(.4,0,.2,1);
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(60, 72, 88, 0.09);
+            animation: tableAppear 1.2s cubic-bezier(.4,0,.2,1);
+        }
+        @keyframes tableAppear {
+            from { opacity: 0; transform: scale(0.97);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(90deg, #4e54c8 0%, #8f94fb 100%);
+            color: #fff;
+            font-size: 1.12em;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e4f6;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        th::after {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 0;
+            background: #fff;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transition: width 0.3s, left 0.3s;
+        }
+        th:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+        tr {
+            transition: background 0.25s, transform 0.18s;
+        }
+        tr:nth-child(even) {
+            background: #f7f9fc;
+        }
+        tr:hover {
+            background: #e3eafd;
+            transform: scale(1.01);
+            box-shadow: 0 2px 8px rgba(78, 84, 200, 0.08);
+            cursor: pointer;
+        }
+        td {
+            color: #444;
+            font-size: 1.04em;
+            border-bottom: 1px solid #e0e4f6;
+            transition: color 0.2s;
+        }
+        td:hover {
+            color: #4e54c8;
+        }
+        /* Row highlight animation */
+        tr.animated-row {
+            animation: highlightRow 1s;
+        }
+        @keyframes highlightRow {
+            0% { background: #fffbe7; }
+            100% { background: #e3eafd; }
+        }
+        /* Responsive */
+        @media (max-width: 700px) {
+            .container {
+                padding: 10px;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th, td {
+                padding: 12px 8px;
+            }
+            th {
+                position: sticky;
+                top: 0;
+                z-index: 2;
+            }
+            tr {
+                margin-bottom: 14px;
+            }
+        }
+        /* Button style for future interactivity */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #4e54c8 0%, #8f94fb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 18px auto 0 auto;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(78, 84, 200, 0.08);
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #8f94fb 0%, #4e54c8 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+    </style>
+    <script>
+        // Animate row on click
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('tbody tr').forEach(function(row) {
+                row.addEventListener('click', function() {
+                    row.classList.add('animated-row');
+                    setTimeout(function() {
+                        row.classList.remove('animated-row');
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Records</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${studentByClassAndSection}">
+                    <td th:text="${student.id}">1</td>
+                    <td th:text="${student.name}">John Doe</td>
+                    <td th:text="${student.rollno}">101</td>
+                    <td th:text="${student.age}">16</td>
+                    <td th:text="${student.address}">123 Main St</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Example button for future interactivity -->
+        <!-- <button class="btn">Add Student</button> -->
+    </div>
+    <script>
+        // Re-attach row animation for dynamically rendered rows (Thymeleaf)
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('tbody tr').forEach(function(row) {
+                row.addEventListener('click', function() {
+                    row.classList.add('animated-row');
+                    setTimeout(function() {
+                        row.classList.remove('animated-row');
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
