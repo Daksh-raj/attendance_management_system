@@ -3,77 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font and Icons -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        :root {
+            --primary: #2575fc;
+            --secondary: #6a11cb;
+            --glass-bg: rgba(255,255,255,0.82);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13);
+            --radius: 22px;
+            --logout: #ff4b2b;
+            --logout-hover: #ff1c00;
+        }
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             min-height: 100vh;
             margin: 0;
             font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
+        /* Animated background bubbles */
         .background-anim {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 0;
             pointer-events: none;
         }
+        /* Glassmorphism Card Container */
         .container {
             position: relative;
-            background: rgba(255,255,255,0.97);
-            border-radius: 22px;
-            box-shadow: 0 12px 40px rgba(44, 62, 80, 0.20);
-            padding: 48px 40px 36px 40px;
-            max-width: 440px;
+            background: var(--glass-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            padding: 54px 40px 40px 40px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
             z-index: 1;
             animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) 0.2s both;
+            backdrop-filter: blur(14px);
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px);}
             to { opacity: 1; transform: translateY(0);}
         }
-        h1 {
-            margin-bottom: 22px;
+        .admin-title {
+            margin-bottom: 28px;
             color: #2575fc;
             font-weight: 700;
             letter-spacing: 1.2px;
-            font-size: 2.1em;
+            font-size: 2.3em;
             animation: slideIn 1.2s cubic-bezier(.23,1.01,.32,1) 0.3s both;
+            text-shadow: 0 2px 12px #6a11cb22;
         }
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(-40px);}
             to { opacity: 1; transform: translateX(0);}
         }
-        .options {
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-top: 36px;
+            margin-bottom: 10px;
+        }
+        .option-card {
+            background: rgba(255,255,255,0.92);
+            border-radius: 16px;
+            box-shadow: 0 2px 18px #6a11cb18;
+            padding: 30px 18px 24px 18px;
             display: flex;
             flex-direction: column;
-            gap: 22px;
-            margin-top: 34px;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.22s, transform 0.22s, background 0.22s;
+            will-change: transform, box-shadow;
+            animation: cardIn 1s cubic-bezier(.23,1.01,.32,1) both;
+        }
+        .option-card:hover, .option-card:focus {
+            background: linear-gradient(120deg, #f8faff 80%, #e3f0ff 100%);
+            box-shadow: 0 8px 32px #2575fc33, 0 0 0 4px #6a11cb22;
+            transform: translateY(-5px) scale(1.045);
+        }
+        .option-card:active {
+            transform: scale(0.98);
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.96);}
+            to { opacity: 1; transform: translateY(0) scale(1);}
+        }
+        .option-icon {
+            font-size: 2.3em;
+            color: var(--secondary);
+            margin-bottom: 14px;
+            animation: iconBounce 1.3s infinite alternate;
+        }
+        @keyframes iconBounce {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(-8px);}
+        }
+        .option-label {
+            font-size: 1.13em;
+            font-weight: 600;
+            color: #2575fc;
+            letter-spacing: 0.7px;
+            margin-bottom: 7px;
+        }
+        .option-desc {
+            color: #666;
+            font-size: 0.97em;
+            margin-bottom: 10px;
         }
         .option-btn {
-            padding: 16px 0;
+            margin-top: 10px;
+            padding: 12px 0;
+            width: 100%;
             background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
             color: #fff;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 9px;
+            font-size: 1em;
             font-weight: 600;
             letter-spacing: 0.7px;
             cursor: pointer;
-            box-shadow: 0 2px 12px rgba(38, 50, 56, 0.10);
+            box-shadow: 0 2px 12px #6a11cb22;
             transition: background 0.25s, transform 0.15s, box-shadow 0.2s;
             text-decoration: none;
             outline: none;
             position: relative;
             overflow: hidden;
-            will-change: transform;
         }
-        .option-btn::after {
+        .option-btn:after {
             content: '';
             position: absolute;
             left: 50%; top: 50%;
@@ -84,21 +152,17 @@
             transition: width 0.4s cubic-bezier(.23,1.01,.32,1), height 0.4s cubic-bezier(.23,1.01,.32,1);
             z-index: 0;
         }
-        .option-btn:hover::after, .option-btn:focus::after {
+        .option-btn:hover:after, .option-btn:focus:after {
             width: 250%; height: 400%;
-        }
-        .option-btn span {
-            position: relative;
-            z-index: 1;
         }
         .option-btn:hover, .option-btn:focus {
             background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
-            transform: translateY(-3px) scale(1.045);
-            box-shadow: 0 6px 24px rgba(38, 50, 56, 0.13);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 24px #2575fc33;
         }
         .logout-btn {
             background: linear-gradient(90deg, #f44336 0%, #ff6f61 100%);
-            margin-top: 14px;
+            margin-top: 18px;
         }
         .logout-btn:hover, .logout-btn:focus {
             background: linear-gradient(90deg, #c62828 0%, #f44336 100%);
@@ -110,23 +174,47 @@
             from { box-shadow: 0 0 0px #2575fc44, 0 0 0px #6a11cb44;}
             to { box-shadow: 0 0 16px #2575fc88, 0 0 24px #6a11cb66;}
         }
-        @media (max-width: 500px) {
-            .container { padding: 26px 8px 18px 8px; }
-            h1 { font-size: 1.2em; }
-            .option-btn { font-size: 15px; }
+        @media (max-width: 700px) {
+            .container { padding: 26px 8px 18px 8px; max-width: 98vw;}
+            .admin-title { font-size: 1.5em; }
+            .options-grid { grid-template-columns: 1fr; gap: 18px;}
+            .option-card { padding: 18px 8px 14px 8px;}
         }
     </style>
 </head>
 <body>
     <canvas class="background-anim"></canvas>
     <div class="container">
-        <h1 class="glow">Admin Dashboard</h1>
-        <div class="options">
-            <a href="/admin/students/studentnewrecord" class="option-btn"><span>Create New Record</span></a>
-            <a href="{% url 'admin_update' %}" class="option-btn"><span>Update Existing Record</span></a>
-            <a href="/admin/students/deletestudentrecord" class="option-btn"><span>Delete Record</span></a>
-            <a href="/admin/students/studentviewrecord" class="option-btn"><span>View All Records</span></a>
+        <div class="admin-title glow">Admin Dashboard</div>
+        <div class="options-grid">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentnewrecord'">
+                <div class="option-icon"><i class="fas fa-user-plus"></i></div>
+                <div class="option-label">Create New Record</div>
+                <div class="option-desc">Add a new student record to your school database.</div>
+                <a href="/admin/students/studentnewrecord" class="option-btn">Create</a>
+            </div>
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentviewrecord'">
+                <div class="option-icon"><i class="fas fa-list"></i></div>
+                <div class="option-label">View All Records</div>
+                <div class="option-desc">Browse, search, and filter all student records.</div>
+                <a href="/admin/students/studentviewrecord" class="option-btn">View</a>
+            </div>
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/deletestudentrecord'">
+                <div class="option-icon"><i class="fas fa-user-times"></i></div>
+                <div class="option-label">Delete Record</div>
+                <div class="option-desc">Remove a student record from the system.</div>
+                <a href="/admin/students/deletestudentrecord" class="option-btn">Delete</a>
+            </div>
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentupdaterecord'">
+                <div class="option-icon"><i class="fas fa-user-edit"></i></div>
+                <div class="option-label">Update Record</div>
+                <div class="option-desc">Edit and update details for any student record.</div>
+                <a href="/admin/students/studentupdaterecord" class="option-btn">Update</a>
+            </div>
         </div>
+        <a href="/admin/logout" class="option-btn logout-btn" style="width:100%;margin-top:30px;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
     </div>
     <script>
         // Animated background bubbles
@@ -185,15 +273,12 @@
             canvas.width = w; canvas.height = h;
         });
 
-        // Button click ripple effect
-        document.querySelectorAll('.option-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                ripple.style.left = (e.offsetX) + 'px';
-                ripple.style.top = (e.offsetY) + 'px';
-                this.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 600);
+        // Keyboard accessibility for cards
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    this.querySelector('.option-btn').click();
+                }
             });
         });
     </script>

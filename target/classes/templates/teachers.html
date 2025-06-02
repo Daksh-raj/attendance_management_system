@@ -3,20 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Teacher Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --accent: #0ea5e9;
+            --bg-light: #f4f8fb;
+            --glass: rgba(255,255,255,0.85);
+            --radius: 22px;
+            --shadow: 0 8px 32px rgba(37,99,235,0.13), 0 1.5px 8px rgba(14,165,233,0.07);
+        }
         body {
             font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
-            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
             min-height: 100vh;
+            background: linear-gradient(120deg, #e0e7ff 0%, var(--bg-light) 100%);
             overflow-x: hidden;
+            position: relative;
+        }
+        /* Animated background shapes */
+        .bg-shape {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.13;
+            z-index: 0;
+            animation: floatShape 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        .bg-shape1 {
+            width: 200px; height: 200px; left: -70px; top: -60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            animation-delay: 0s;
+        }
+        .bg-shape2 {
+            width: 120px; height: 120px; right: -40px; top: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            animation-delay: 2s;
+        }
+        .bg-shape3 {
+            width: 150px; height: 150px; left: 60vw; bottom: -70px;
+            background: linear-gradient(135deg, var(--primary) 60%, #e0e7ff 100%);
+            animation-delay: 3.5s;
+        }
+        @keyframes floatShape {
+            from { transform: translateY(0);}
+            to { transform: translateY(-30px);}
         }
         .container {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            z-index: 1;
+            position: relative;
             animation: fadeInBg 1.2s;
         }
         @keyframes fadeInBg {
@@ -24,10 +64,10 @@
             to { opacity: 1; }
         }
         .profile-card {
-            background: #fff;
-            border-radius: 22px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            padding: 40px 44px 36px 44px;
+            background: var(--glass);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 44px 48px 36px 48px;
             max-width: 420px;
             margin-top: 60px;
             text-align: center;
@@ -35,19 +75,25 @@
             position: relative;
             overflow: hidden;
             animation: popIn 0.8s cubic-bezier(.68,-0.55,.27,1.55);
+            backdrop-filter: blur(14px);
         }
         @keyframes popIn {
             0% { transform: scale(0.85) translateY(40px); opacity: 0; }
             80% { transform: scale(1.05) translateY(-8px); opacity: 1; }
             100% { transform: scale(1) translateY(0); }
         }
+        /* Tilt effect */
+        .profile-card:active {
+            transition: transform 0.2s;
+            transform: scale(0.98);
+        }
         .profile-card::before {
             content: '';
             position: absolute;
             top: -80px; left: -80px;
             width: 180px; height: 180px;
-            background: radial-gradient(circle, #1976d2 0%, #42a5f5 80%, transparent 100%);
-            opacity: 0.08;
+            background: radial-gradient(circle, var(--primary) 0%, var(--accent) 80%, transparent 100%);
+            opacity: 0.09;
             z-index: 0;
             pointer-events: none;
             animation: floatCircle 6s infinite alternate;
@@ -61,10 +107,10 @@
             height: 104px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #1976d2;
+            border: 5px solid var(--primary);
             margin-bottom: 20px;
             background: #e3e3e3;
-            box-shadow: 0 4px 18px rgba(25, 118, 210, 0.10);
+            box-shadow: 0 4px 18px rgba(37,99,235,0.10);
             transition: transform 0.3s;
             z-index: 1;
             position: relative;
@@ -78,35 +124,33 @@
         .profile-card h2 {
             margin: 0 0 10px 0;
             font-size: 2.1rem;
-            color: #1976d2;
+            color: var(--primary);
             letter-spacing: 1px;
             font-weight: 700;
             z-index: 1;
             position: relative;
+            animation: fadeIn 1.1s;
         }
-        .profile-info {
-            margin-bottom: 22px;
-            color: #444;
-            font-size: 1.08rem;
-        }
-        .profile-info p {
-            margin: 8px 0;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .profile-table {
             margin: 0 auto 18px auto;
             width: 100%;
             border-collapse: collapse;
             font-size: 1rem;
-            background: rgba(66, 165, 245, 0.03);
+            background: rgba(14,165,233, 0.03);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 1px 6px rgba(66, 165, 245, 0.06);
+            box-shadow: 0 1px 6px rgba(14,165,233, 0.06);
             z-index: 1;
             position: relative;
+            animation: fadeIn 1.2s;
         }
         .profile-table td {
             padding: 10px 8px;
-            border-bottom: 1px solid #e3eafc;
+            border-bottom: 1px solid #e0e7ff;
             color: #333;
             transition: background 0.2s;
         }
@@ -115,7 +159,7 @@
         }
         .profile-table td:first-child {
             font-weight: 600;
-            color: #1976d2;
+            color: var(--primary);
             width: 38%;
         }
         .profile-table td:last-child {
@@ -128,21 +172,23 @@
             margin-top: 18px;
             z-index: 1;
             position: relative;
+            animation: fadeIn 1.3s;
         }
         .action-btn {
             padding: 13px 32px;
             border: none;
             border-radius: 8px;
-            background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+            background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
             color: #fff;
             font-size: 1.08rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+            box-shadow: 0 2px 12px rgba(37,99,235,0.10);
             transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
             outline: none;
             position: relative;
             overflow: hidden;
+            animation: floatBtn 2.5s infinite alternate;
         }
         .action-btn::after {
             content: '';
@@ -161,12 +207,16 @@
             transition: 0s;
         }
         .action-btn:hover {
-            background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+            background: linear-gradient(90deg, var(--accent) 60%, var(--primary) 100%);
             transform: translateY(-2px) scale(1.045);
-            box-shadow: 0 6px 24px rgba(25, 118, 210, 0.18);
+            box-shadow: 0 6px 24px rgba(14,165,233,0.18);
         }
         .action-btn:focus {
-            outline: 2px solid #1976d2;
+            outline: 2px solid var(--primary);
+        }
+        @keyframes floatBtn {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px) scale(1.045);}
         }
         /* Toast styles */
         .toast {
@@ -174,12 +224,12 @@
             bottom: 32px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+            background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
             color: #fff;
             padding: 15px 36px;
             border-radius: 10px;
             font-size: 1.08rem;
-            box-shadow: 0 2px 12px rgba(25, 118, 210, 0.15);
+            box-shadow: 0 2px 12px rgba(37,99,235,0.15);
             z-index: 9999;
             opacity: 0;
             pointer-events: none;
@@ -192,14 +242,7 @@
         @keyframes toastOut {
             to { opacity: 0; }
         }
-        /* Floating animation for action buttons */
-        .action-btn {
-            animation: floatBtn 2.5s infinite alternate;
-        }
-        @keyframes floatBtn {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px) scale(1.045);}
-        }
+        /* Responsive Design */
         @media (max-width: 600px) {
             .profile-card {
                 padding: 24px 8px;
@@ -256,6 +299,10 @@
     </script>
 </head>
 <body>
+    <!-- Animated background shapes for visual depth and color harmony -->
+    <span class="bg-shape bg-shape1"></span>
+    <span class="bg-shape bg-shape2"></span>
+    <span class="bg-shape bg-shape3"></span>
     <div class="container">
         <div class="profile-card">
             <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Teacher Avatar">

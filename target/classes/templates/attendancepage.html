@@ -1,193 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Attendance Page</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background: linear-gradient(120deg, #e3f0ff 0%, #f9f9f9 100%);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 750px;
-            margin: 48px auto;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.10), 0 1.5px 4px rgba(0,0,0,0.04);
-            padding: 40px 48px 32px 48px;
-            animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) both;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        h2 {
-            text-align: center;
-            color: #1976d2;
-            margin-bottom: 32px;
-            font-size: 2.1em;
-            letter-spacing: 1px;
-            font-weight: 700;
-            animation: popIn 0.8s cubic-bezier(.23,1.01,.32,1) both;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0;}
-            100% { transform: scale(1); opacity: 1;}
-        }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            margin-bottom: 28px;
-        }
-        th, td {
-            padding: 14px 12px;
-            text-align: left;
-            font-size: 1.07em;
-        }
-        th {
-            background: linear-gradient(90deg, #1976d2 80%, #42a5f5 100%);
-            color: #fff;
-            font-weight: 700;
-            border-radius: 8px 8px 0 0;
-            letter-spacing: 0.5px;
-            border: none;
-        }
-        tr {
-            background: #f4f8fd;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(25, 118, 210, 0.04);
-            transition: box-shadow 0.2s;
-        }
-        tr:hover {
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.10);
-            background: #e3f0ff;
-            transition: background 0.3s, box-shadow 0.2s;
-        }
-        select {
-            padding: 7px 14px;
-            border-radius: 6px;
-            border: 1px solid #bdbdbd;
-            background: #fff;
-            font-size: 1em;
-            transition: border 0.2s, box-shadow 0.2s;
-            outline: none;
-        }
-        select:focus {
-            border: 1.5px solid #1976d2;
-            box-shadow: 0 0 6px #1976d2aa;
-        }
-        button[type="submit"] {
-            display: block;
-            width: 100%;
-            padding: 14px 0;
-            background: linear-gradient(90deg, #1976d2 70%, #42a5f5 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.15em;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
-            transition: background 0.2s, transform 0.1s;
-            margin-top: 12px;
-            letter-spacing: 0.5px;
-        }
-        button[type="submit"]:hover {
-            background: linear-gradient(90deg, #125ea2 70%, #1976d2 100%);
-            transform: translateY(-2px) scale(1.03);
-        }
-        .fade-in {
-            animation: fadeIn 1.2s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0;}
-            to { opacity: 1;}
-        }
-        .empty-message {
-            text-align: center;
-            color: #888;
-            font-size: 1.15em;
-            margin: 40px 0 20px 0;
-            animation: fadeIn 1s;
-        }
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 18px 6px 16px 6px;
-            }
-            th, td {
-                padding: 10px 4px;
-                font-size: 0.98em;
-            }
-            h2 {
-                font-size: 1.3em;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Attendance Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --accent: #0ea5e9;
+      --bg-light: #f4f6fb;
+      --card-bg: #fff;
+      --card-shadow: 0 4px 24px rgba(37,99,235,0.07);
+      --radius: 18px;
+      --status-present: #e3fcec;
+      --status-absent: #ffeaea;
+    }
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: linear-gradient(120deg, var(--bg-light) 0%, #e0e7ff 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1050px;
+      margin: 48px auto;
+      padding: 32px 16px;
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 36px;
+      font-size: 2.2em;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .attendance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 28px;
+    }
+    .student-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 26px 20px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      transition: box-shadow 0.23s, transform 0.23s;
+      animation: cardIn 0.7s cubic-bezier(.39,.575,.565,1.000);
+      min-height: 160px;
+    }
+    @keyframes cardIn {
+      0% { opacity: 0; transform: translateY(30px) scale(0.97);}
+      100% { opacity: 1; transform: translateY(0) scale(1);}
+    }
+    .student-card:hover {
+      box-shadow: 0 8px 32px rgba(14,165,233,0.18);
+      transform: translateY(-4px) scale(1.025);
+    }
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 1.3em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 13px;
+      user-select: none;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.11);
+    }
+    .student-name {
+      font-size: 1.17em;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 2px;
+      letter-spacing: 0.5px;
+    }
+    .student-info {
+      color: #334155;
+      font-size: 1em;
+      margin-bottom: 2px;
+      line-height: 1.5;
+    }
+    .student-label {
+      color: #7b8ca7;
+      font-weight: 600;
+      font-size: 0.97em;
+      margin-right: 4px;
+    }
+    .attendance-select-row {
+      margin-top: 14px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-select {
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 1.5px solid #e5e7eb;
+      font-size: 1em;
+      background: #f8fafc;
+      color: #2563eb;
+      font-weight: 600;
+      transition: border 0.2s, background 0.3s;
+      outline: none;
+      min-width: 110px;
+    }
+    .status-select:focus {
+      border: 1.5px solid var(--primary);
+      background: #e0e7ff;
+    }
+    .status-select.present {
+      background: var(--status-present);
+      color: #22c55e;
+      border-color: #bbf7d0;
+    }
+    .status-select.absent {
+      background: var(--status-absent);
+      color: #ef4444;
+      border-color: #fecaca;
+    }
+    /* Modern submit button */
+    .fancy-btn {
+      width: 100%;
+      margin: 32px 0 0 0;
+      padding: 16px 0;
+      background: linear-gradient(90deg, var(--primary) 70%, var(--accent) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.18em;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 18px rgba(37,99,235,0.13);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s, box-shadow 0.22s, transform 0.13s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      outline: none;
+    }
+    .fancy-btn:hover, .fancy-btn:focus {
+      background: linear-gradient(90deg, var(--accent) 70%, var(--primary) 100%);
+      box-shadow: 0 8px 32px rgba(14,165,233,0.18);
+      transform: translateY(-2px) scale(1.025);
+    }
+    .fancy-btn:active {
+      transform: scale(0.97);
+    }
+    .fancy-btn .btn-icon {
+      display: inline-block;
+      opacity: 0;
+      width: 22px;
+      height: 22px;
+      margin-left: 6px;
+      transform: scale(0.7);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .fancy-btn.success .btn-icon {
+      opacity: 1;
+      transform: scale(1.1);
+      animation: popCheck 0.5s;
+    }
+    @keyframes popCheck {
+      0% { transform: scale(0.3); opacity: 0; }
+      70% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      .container {
+        padding: 10px 2vw 10px 2vw;
+        margin: 16px auto;
+      }
+      h2 {
+        font-size: 1.3em;
+      }
+      .attendance-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .student-card {
+        padding: 16px 10px 12px 10px;
+        min-height: 120px;
+      }
+      .fancy-btn {
+        font-size: 1em;
+        padding: 13px 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container fade-in">
-        <div th:if="${#lists.isEmpty(studentsList)}">
-            <p class="empty-message">No students found for this class.</p>
+  <div class="container">
+    <h2>Take Attendance</h2>
+    <form method="post" action="/teacher/login/attendance/take" id="attendanceForm">
+      <input type="hidden" name="date" th:value="${date}" />
+      <div class="attendance-grid">
+        <div class="student-card" th:each="student : ${studentsList}">
+          <div class="student-avatar" th:text="${student.name.substring(0,1)}">S</div>
+          <div class="student-name" th:text="${student.name}">John Doe</div>
+          <div class="student-info">
+            <span class="student-label">Roll No:</span>
+            <span th:text="${student.rollno}">101</span>
+          </div>
+          <div class="attendance-select-row">
+            <label for="attendance" class="student-label" style="margin:0;">Status:</label>
+            <select th:name="'attendance_' + ${student.rollno}" class="status-select">
+              <option value="present">Present</option>
+              <option value="absent">Absent</option>
+            </select>
+          </div>
         </div>
-        <div th:unless="${#lists.isEmpty(studentsList)}">
-            <h2>Take Attendance</h2>
-            <form method="post" action="/teacher/login/attendance/take" id="attendanceForm">
-                <input type="hidden" name="date" th:value="${date}" />
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Roll No</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="student : ${studentsList}">
-                            <td th:text="${student.rollno}"></td>
-                            <td th:text="${student.name}"></td>
-                            <td>
-                                <select th:name="'attendance_' + ${student.rollno}" class="status-select">
-                                    <option value="present">Present</option>
-                                    <option value="absent">Absent</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit" id="submitBtn">Submit Attendance</button>
-            </form>
-        </div>
-    </div>
-    <script>
-        // Animate select on change
-        document.querySelectorAll('.status-select').forEach(function(select) {
-            select.addEventListener('change', function() {
-                select.style.backgroundColor = select.value === 'present' ? '#e3fcec' : '#ffeaea';
-                select.style.transition = 'background 0.4s';
-            });
-        });
+      </div>
+      <button type="submit" id="desktopSubmitBtn" class="fancy-btn fade-in">
+        <span class="btn-label">Submit Attendance</span>
+        <span class="btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="10" fill="#bbf7d0"/>
+            <path d="M6 10.5l3 3 5-6" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+    </form>
+  </div>
+  <script>
+    // Animate select on change
+    document.querySelectorAll('.status-select').forEach(function(select) {
+      select.addEventListener('change', function() {
+        select.classList.remove('present', 'absent');
+        select.classList.add(select.value);
+      });
+    });
 
-        // Button loading animation
-        document.getElementById('attendanceForm')?.addEventListener('submit', function(e) {
-            var btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<span style="display:inline-block;vertical-align:middle;width:22px;height:22px;border:3px solid #fff;border-radius:50%;border-top:3px solid #1976d2;animation:spin 1s linear infinite;margin-right:8px;"></span>Submitting...';
-        });
+    // Button loading animation and checkmark
+    document.getElementById('attendanceForm')?.addEventListener('submit', function(e) {
+      var btn = document.getElementById('desktopSubmitBtn');
+      btn.disabled = true;
+      btn.classList.remove('success');
+      btn.querySelector('.btn-label').innerHTML =
+        '<span style="display:inline-block;vertical-align:middle;width:22px;height:22px;border:3px solid #fff;border-radius:50%;border-top:3px solid #2563eb;animation:spin 1s linear infinite;margin-right:8px;"></span>Submitting...';
+      setTimeout(function(){
+        btn.querySelector('.btn-label').textContent = 'Submitted!';
+        btn.classList.add('success');
+        setTimeout(function(){
+          btn.disabled = false;
+          btn.classList.remove('success');
+          btn.querySelector('.btn-label').textContent = 'Submit Attendance';
+        }, 1800);
+      }, 1200);
+    });
 
-        // Spinner animation
-        const style = document.createElement('style');
-        style.innerHTML = `
-        @keyframes spin {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }`;
-        document.head.appendChild(style);
-    </script>
+    // Spinner animation
+    const style = document.createElement('style');
+    style.innerHTML = `
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }`;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
