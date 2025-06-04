@@ -11,11 +11,11 @@
         :root {
             --primary: #2575fc;
             --secondary: #6a11cb;
-            --glass-bg: rgba(255,255,255,0.82);
+            --glass-bg: rgba(255,255,255,0.89);
             --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13);
-            --radius: 22px;
-            --logout: #ff4b2b;
-            --logout-hover: #ff1c00;
+            --radius: 18px;
+            --logout: #f44336;
+            --logout-hover: #c62828;
         }
         body {
             min-height: 100vh;
@@ -26,7 +26,6 @@
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
-            overflow-y: auto;
         }
         /* Animated background bubbles */
         .background-anim {
@@ -35,14 +34,13 @@
             z-index: 0;
             pointer-events: none;
         }
-        /* Glassmorphism Card Container */
         .container {
             position: relative;
             background: var(--glass-bg);
             border-radius: var(--radius);
             box-shadow: var(--card-shadow);
-            padding: 54px 40px 40px 40px;
-            max-width: 480px;
+            padding: 48px 32px 38px 32px;
+            max-width: 440px;
             width: 100%;
             text-align: center;
             z-index: 1;
@@ -53,31 +51,26 @@
             from { opacity: 0; transform: translateY(40px);}
             to { opacity: 1; transform: translateY(0);}
         }
-        .admin-title {
-            margin-bottom: 28px;
+        h1 {
+            margin-bottom: 22px;
             color: #2575fc;
             font-weight: 700;
             letter-spacing: 1.2px;
-            font-size: 2.3em;
-            animation: slideIn 1.2s cubic-bezier(.23,1.01,.32,1) 0.3s both;
+            font-size: 2.1em;
             text-shadow: 0 2px 12px #6a11cb22;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-40px);}
-            to { opacity: 1; transform: translateX(0);}
         }
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            margin-top: 36px;
+            gap: 22px;
+            margin-top: 34px;
             margin-bottom: 10px;
         }
         .option-card {
-            background: rgba(255,255,255,0.92);
-            border-radius: 16px;
-            box-shadow: 0 2px 18px #6a11cb18;
-            padding: 30px 18px 24px 18px;
+            background: rgba(255,255,255,0.97);
+            border-radius: 14px;
+            box-shadow: 0 2px 14px #6a11cb18;
+            padding: 24px 10px 18px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -86,7 +79,7 @@
             overflow: hidden;
             transition: box-shadow 0.22s, transform 0.22s, background 0.22s;
             will-change: transform, box-shadow;
-            animation: cardIn 1s cubic-bezier(.23,1.01,.32,1) both;
+            animation: cardIn 0.8s cubic-bezier(.23,1.01,.32,1) both;
         }
         .option-card:hover, .option-card:focus {
             background: linear-gradient(120deg, #f8faff 80%, #e3f0ff 100%);
@@ -101,9 +94,9 @@
             to { opacity: 1; transform: translateY(0) scale(1);}
         }
         .option-icon {
-            font-size: 2.3em;
+            font-size: 2em;
             color: var(--secondary);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             animation: iconBounce 1.3s infinite alternate;
         }
         @keyframes iconBounce {
@@ -111,16 +104,11 @@
             100% { transform: translateY(-8px);}
         }
         .option-label {
-            font-size: 1.13em;
+            font-size: 1.08em;
             font-weight: 600;
             color: #2575fc;
             letter-spacing: 0.7px;
-            margin-bottom: 7px;
-        }
-        .option-desc {
-            color: #666;
-            font-size: 0.97em;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
         .option-btn {
             margin-top: 10px;
@@ -161,60 +149,46 @@
             box-shadow: 0 6px 24px #2575fc33;
         }
         .logout-btn {
-            background: linear-gradient(90deg, #f44336 0%, #ff6f61 100%);
-            margin-top: 18px;
+            background: linear-gradient(90deg, var(--logout) 0%, #ff6f61 100%);
+            margin-top: 24px;
         }
         .logout-btn:hover, .logout-btn:focus {
-            background: linear-gradient(90deg, #c62828 0%, #f44336 100%);
-        }
-        .glow {
-            animation: glowPulse 2.2s infinite alternate;
-        }
-        @keyframes glowPulse {
-            from { box-shadow: 0 0 0px #2575fc44, 0 0 0px #6a11cb44;}
-            to { box-shadow: 0 0 16px #2575fc88, 0 0 24px #6a11cb66;}
+            background: linear-gradient(90deg, var(--logout-hover) 0%, var(--logout) 100%);
         }
         @media (max-width: 700px) {
             .container { padding: 26px 8px 18px 8px; max-width: 98vw;}
-            .admin-title { font-size: 1.5em; }
-            .options-grid { grid-template-columns: 1fr; gap: 18px;}
-            .option-card { padding: 18px 8px 14px 8px;}
+            h1 { font-size: 1.2em; }
+            .options-grid { grid-template-columns: 1fr; gap: 16px;}
+            .option-card { padding: 16px 6px 12px 6px;}
         }
     </style>
 </head>
 <body>
     <canvas class="background-anim"></canvas>
     <div class="container">
-        <div class="admin-title glow">Admin Dashboard</div>
+        <h1>Admin Dashboard</h1>
         <div class="options-grid">
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentnewrecord'">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentnewrecord">
                 <div class="option-icon"><i class="fas fa-user-plus"></i></div>
                 <div class="option-label">Create New Record</div>
-                <div class="option-desc">Add a new student record to your school database.</div>
                 <a href="/admin/students/studentnewrecord" class="option-btn">Create</a>
             </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentviewrecord'">
-                <div class="option-icon"><i class="fas fa-list"></i></div>
-                <div class="option-label">View All Records</div>
-                <div class="option-desc">Browse, search, and filter all student records.</div>
-                <a href="/admin/students/studentviewrecord" class="option-btn">View</a>
-            </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/deletestudentrecord'">
-                <div class="option-icon"><i class="fas fa-user-times"></i></div>
-                <div class="option-label">Delete Record</div>
-                <div class="option-desc">Remove a student record from the system.</div>
-                <a href="/admin/students/deletestudentrecord" class="option-btn">Delete</a>
-            </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentupdaterecord'">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentupdaterecord">
                 <div class="option-icon"><i class="fas fa-user-edit"></i></div>
-                <div class="option-label">Update Record</div>
-                <div class="option-desc">Edit and update details for any student record.</div>
+                <div class="option-label">Update Existing Record</div>
                 <a href="/admin/students/studentupdaterecord" class="option-btn">Update</a>
             </div>
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/deletestudentrecord">
+                <div class="option-icon"><i class="fas fa-user-times"></i></div>
+                <div class="option-label">Delete Record</div>
+                <a href="/admin/students/deletestudentrecord" class="option-btn">Delete</a>
+            </div>
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentviewrecord">
+                <div class="option-icon"><i class="fas fa-list"></i></div>
+                <div class="option-label">View All Records</div>
+                <a href="/admin/students/studentviewrecord" class="option-btn">View</a>
+            </div>
         </div>
-        <a href="/admin/logout" class="option-btn logout-btn" style="width:100%;margin-top:30px;">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
     </div>
     <script>
         // Animated background bubbles

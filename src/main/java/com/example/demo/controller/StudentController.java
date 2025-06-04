@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,9 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Attendance;
+import com.example.demo.model.Exam;
+import com.example.demo.model.Mark;
 import com.example.demo.model.Student;
+import com.example.demo.model.Subject;
 import com.example.demo.service.AttendanceService;
+import com.example.demo.service.ExamService;
+import com.example.demo.service.MarkService;
 import com.example.demo.service.StudentService;
+import com.example.demo.service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -26,6 +33,12 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private AttendanceService attendanceService;
+    @Autowired
+    private ExamService examService;
+    @Autowired
+    private SubjectService subjectService;
+    @Autowired
+    private MarkService markService;
 
     @GetMapping("/")
     public String homePage() {
@@ -174,7 +187,27 @@ public class StudentController {
 
     @GetMapping("/admin/students")
     public String showAdminStudentsManagementPage() {
+        return "adminstudentmanage"; // This will render src/main/resources/templates/students.html
+    }
+
+    @GetMapping("/admin/students/crud")
+    public String showAdminStudentsCrudPage() {
         return "adminstudents"; // This will render src/main/resources/templates/students.html
+    }
+
+    @GetMapping("/admin/students/examsubjectmanage")
+    public String showAdminStudentsExamSubjectPage() {
+        return "adminexamsubjectpage"; // This will render src/main/resources/templates/students.html
+    }
+
+    @GetMapping("/admin/students/exam")
+    public String adminStudentExamPage() {
+        return "adminexampage"; // This will render src/main/resources/templates/students.html
+    }
+
+    @GetMapping("/admin/students/subject")
+    public String adminStudentSubjectPage() {
+        return "adminsubjectpage"; // This will render src/main/resources/templates/students.html
     }
 
     @GetMapping("/admin/students/studentnewrecord")
@@ -222,7 +255,7 @@ public class StudentController {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid student data format", e);
         }
-        
+
         Long deletedCount = studentService.deleteStudentByRollnoSectionStandard(rollno, standard, section);
         System.out.println("Deleted Count: " + deletedCount);
         if (deletedCount > 0) {
@@ -287,8 +320,68 @@ public class StudentController {
             studentService.saveStudent(student);
             return "success"; // Redirect to the students page after saving
         } catch (Exception ex) {
-            // Log the exception or handle it as needed
-            return "error"; // Redirect to an error page
+            return "error"; // Redirect to an error page if saving fails
         }
     }
+
+    @GetMapping("/students/exams")
+    public String studentsExamsList(@RequestParam("standard") String standard,
+            @RequestParam("section") String section,@RequestParam("rollno") String rollno, 
+            Model model) {
+
+        if (standard == null || section == null) {
+            // Optionally, handle case where teacher is not a class teacher
+            model.addAttribute("error", "You are not assigned as a class teacher.");
+            return "error"; // or a suitable error page
+        }
+
+        List<Exam> exams = examService.getExamsByStandardAndSection(standard, section);
+        model.addAttribute("examsList", exams);
+        model.addAttribute("rollno", rollno);
+        System.out.println("Exams retrieved: " + exams.size());
+
+        return "studentsexamlist";
+    }
+
+    @GetMapping("/students/exams/results")
+    public String getStudentsMarks(@RequestParam("examid") String examid, @RequestParam("standard") String standard,
+            @RequestParam("section") String section, @RequestParam("rollno") String rollno, Model model) {
+        Long examId = Long.parseLong(examid);
+        Integer rollNo = Integer.parseInt(rollno);
+        System.out.println("Exam ID received: " + examId);
+
+        Optional<Exam> exam = examService.getExamById(examId);
+        if (exam == null) {
+            model.addAttribute("error", "Exam not found");
+            return "error"; // Redirect to an error page
+        }
+        model.addAttribute("selectedExam", exam.get());
+
+        List<Subject> subjects = subjectService.getSubjectsByStandardAndSection(standard, section);
+        Student studentSelected = null;
+        studentSelected = studentService.findByClassSectionAndRollno(standard, section,
+
+                rollNo);
+
+        if (studentSelected == null) {
+            model.addAttribute("error", "Student not found");
+            return "error"; // Redirect to an error page
+        }
+
+        Map<Subject, Mark> subjectMarkMap = new LinkedHashMap<>();
+        for (Subject subject : subjects) {
+            Mark mark = markService.findByStudentExamSubject(subject, exam.get(), studentSelected);
+            subjectMarkMap.put(subject, mark); // mark can be null if not found
+        }
+
+        // In your controller method
+        model.addAttribute("subjectMarkMap", subjectMarkMap);
+        model.addAttribute("studentName", studentSelected.getName());
+        model.addAttribute("studentRollNo", studentSelected.getRollno());
+        model.addAttribute("studentStandard", standard);
+        model.addAttribute("studentSection", section);
+        model.addAttribute("exam", exam.get());
+        return "studentsresultspage";
+    }
+
 }

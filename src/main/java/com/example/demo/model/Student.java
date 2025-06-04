@@ -90,3 +90,4 @@ public class Student {
         attendance.setStudent(null);
     }
 }
+        

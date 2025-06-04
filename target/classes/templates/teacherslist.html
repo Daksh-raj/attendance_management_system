@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers List by Class</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2341a4;
+            --accent: #0ea5e9;
+            --success: #22c55e;
+            --bg-light: #f3f6fb;
+            --card-bg: rgba(255,255,255,0.92);
+            --card-shadow: 0 8px 32px rgba(35,65,164,0.11);
+            --radius: 20px;
+            --heading: #2341a4;
+            --label: #0ea5e9;
+            --text: #21334a;
+            --muted: #6b7a90;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(120deg, var(--bg-light) 0%, #e0e7ff 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Animated bubble background */
+        .bubbles {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            left: 0; top: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            opacity: 0.35;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            animation: rise 10s infinite ease-in;
+            filter: blur(2px);
+        }
+        .bubble:nth-child(1) { width:50px; height:50px; left:10%; animation-duration:8s; }
+        .bubble:nth-child(2) { width:30px; height:30px; left:20%; animation-duration:5s; animation-delay:1s; }
+        .bubble:nth-child(3) { width:60px; height:60px; left:35%; animation-duration:7s; animation-delay:2s; }
+        .bubble:nth-child(4) { width:100px; height:100px; left:50%; animation-duration:11s; }
+        .bubble:nth-child(5) { width:45px; height:45px; left:55%; animation-duration:6s; animation-delay:1s; }
+        .bubble:nth-child(6) { width:70px; height:70px; left:65%; animation-duration:8s; animation-delay:3s; }
+        .bubble:nth-child(7) { width:110px; height:110px; left:70%; animation-duration:12s; animation-delay:2s; }
+        .bubble:nth-child(8) { width:35px; height:35px; left:80%; animation-duration:6s; animation-delay:2s; }
+        .bubble:nth-child(9) { width:25px; height:25px; left:70%; animation-duration:5s; animation-delay:1s; }
+        .bubble:nth-child(10) { width:90px; height:90px; left:25%; animation-duration:10s; animation-delay:4s; }
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0);}
+            50% { transform: translateX(100px);}
+            100% { bottom: 1080px; transform: translateX(-200px);}
+        }
+        h1 {
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--heading);
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1.2px;
+            animation: fadeInDown 1s ease forwards;
+            z-index: 1;
+            text-shadow: 0 2px 16px #a1c4fd22;
+        }
+        form {
+            background: var(--card-bg);
+            padding: 2rem 2.2rem 1.5rem 2.2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            max-width: 420px;
+            width: 100%;
+            margin-bottom: 2.2rem;
+            animation: fadeInUp 1s ease forwards;
+            z-index: 1;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--label);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.2px;
+            font-size: 1.05rem;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: var(--radius);
+            font-size: 1.08rem;
+            color: var(--heading);
+            background: #f7faff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 8px var(--accent);
+            background: #e0f2fe;
+        }
+        button {
+            margin-top: 1.1rem;
+            width: 100%;
+            padding: 1rem 0;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            font-weight: 700;
+            font-size: 1.13rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.18);
+            transition: background 0.3s, transform 0.18s;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transform: scale(1.05);
+        }
+        .no-teachers-msg {
+            background: linear-gradient(120deg, #f5f9ff 60%, #e0e7ff 100%);
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(37,99,235,0.09);
+            color: var(--primary);
+            font-size: 1.22rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+            margin-bottom: 2.2rem;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            z-index: 1;
+        }
+        .no-teachers-msg svg {
+            display: block;
+            margin: 0 auto 0.3rem auto;
+        }
+        .teachers-list {
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.2rem;
+            animation: fadeInUp 1s ease forwards;
+            z-index: 1;
+        }
+        .teacher-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            padding: 2.2rem 2rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            align-items: flex-start;
+            transition: box-shadow 0.3s, transform 0.3s;
+            cursor: default;
+            animation: cardPop 0.9s cubic-bezier(.39,.575,.565,1.000);
+            animation-fill-mode: both;
+            position: relative;
+            border-left: 7px solid var(--accent);
+        }
+        .teacher-card:hover {
+            box-shadow: 0 16px 38px rgba(14,165,233,0.22);
+            transform: translateY(-8px) scale(1.04);
+            border-left: 7px solid var(--primary);
+        }
+        .teacher-keyval {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.11rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .teacher-key {
+            color: var(--label);
+            font-weight: 700;
+            min-width: 110px;
+            letter-spacing: 0.5px;
+            font-size: 1.08em;
+        }
+        .teacher-value {
+            color: var(--text);
+            font-weight: 600;
+            font-size: 1.08em;
+            word-break: break-word;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cardPop {
+            from { opacity: 0; transform: scale(0.95);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        @media (max-width: 900px) {
+            .teachers-list {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            form {
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .teacher-key { min-width: 80px; font-size: 1em;}
+        }
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.2rem; }
+            .teacher-card { padding: 1.2rem 0.7rem 1rem 1rem; }
+            .teachers-list { gap: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated bubble background -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <h1>Find Teachers by Class</h1>
+    <form method="get" action="/admin/teachers/teacherslist/get">
+        <label for="classInput">Enter Standard</label>
+        <input type="text" id="classInput" name="standard" placeholder="e.g. 10" required />
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="no-teachers-msg" th:if="${#lists.isEmpty(teachersList)}">
+        <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22" fill="#e0e7ff" stroke="#2563eb" stroke-width="2"/>
+            <path d="M16 32c0-4 4-6 8-6s8 2 8 6" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="18" cy="22" r="2" fill="#2563eb"/>
+            <circle cx="30" cy="22" r="2" fill="#2563eb"/>
+        </svg>
+        <div>No teachers found for this standard.</div>
+    </div>
+
+    <div class="teachers-list" th:if="${not #lists.isEmpty(teachersList)}">
+        <!-- Iterate over teachersList model attribute -->
+        <div class="teacher-card" th:each="teacher : ${teachersList}">
+            <div class="teacher-keyval">
+                <span class="teacher-key">Name:</span>
+                <span class="teacher-value" th:text="${teacher.name}">Teacher Name</span>
+            </div>
+            <div class="teacher-keyval">
+                <span class="teacher-key">Subject:</span>
+                <span class="teacher-value" th:text="${teacher.subject}">Subject</span>
+            </div>
+            <div class="teacher-keyval">
+                <span class="teacher-key">Email:</span>
+                <span class="teacher-value" th:text="${teacher.email}">email@example.com</span>
+            </div>
+            <div class="teacher-keyval">
+                <span class="teacher-key">Standard:</span>
+                <span class="teacher-value" th:text="${teacher.classTeacherStandard}">10</span>
+            </div>
+            <div class="teacher-keyval">
+                <span class="teacher-key">Section:</span>
+                <span class="teacher-value" th:text="${teacher.classTeacherSection}">A</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -16,4 +16,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     @Query("SELECT t FROM Teacher t WHERE t.email = :email AND t.password = :password")
     Optional<Teacher> findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+
+    List<Teacher> findByClassTeacherStandard(String standard);
 }

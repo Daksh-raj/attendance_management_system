@@ -1,10 +1,10 @@
 package com.example.demo.controller;
+
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +36,6 @@ public class TeacherController {
     private StudentService studentService;
     @Autowired
     private AttendanceService attendanceService;
-
 
     @PostMapping("/admin/teachers/teachernewrecord/add")
     public String addTeachers(@RequestBody String teacherJson) {
@@ -100,11 +99,11 @@ public class TeacherController {
     }
 
     @PostMapping("/teacher/login")
-    public String loginTeacher(@RequestBody String loginRequest,Model model, HttpSession session) {
+    public String loginTeacher(@RequestBody String loginRequest, Model model, HttpSession session) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String email="",password="";
-        try{
+        String email = "", password = "";
+        try {
             System.out.println(loginRequest);
             // Parse URL-encoded form data
             String[] pairs = loginRequest.split("&");
@@ -115,10 +114,10 @@ public class TeacherController {
                     String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
                     switch (key) {
                         case "email":
-                            email=value;
+                            email = value;
                             break;
                         case "password":
-                            password=value;
+                            password = value;
                             break;
                     }
                 }
@@ -131,14 +130,16 @@ public class TeacherController {
         System.out.println("Password: " + password);
 
         Teacher teacher = null;
-        // To print the teacher object as JSON instead of the default toString (which gives com.example.demo.model.Teacher@hashcode)
-        
-        teacher= teacherService.findByEmailAndPassword(email, password).orElse(null);
+        // To print the teacher object as JSON instead of the default toString (which
+        // gives com.example.demo.model.Teacher@hashcode)
+
+        teacher = teacherService.findByEmailAndPassword(email, password).orElse(null);
         System.out.println("Teacher: " + teacher);
         model.addAttribute("loggedInTeacher", teacher);
         session.setAttribute("loggedInTeacher", teacher);
         return "teachers";
     }
+
     @GetMapping("/teacher/login/viewstudents")
     public String viewStudents(Model model, HttpSession session) {
         System.out.println("Inside viewStudents method");
@@ -153,15 +154,16 @@ public class TeacherController {
                 return "teachers";
             }
             List<Student> studentOfClassTeacher = studentService.getStudentsByClassAndSection(standard, section);
-            
+
             model.addAttribute("studentOfClassTeacher", studentOfClassTeacher);
-            
+
             if (studentOfClassTeacher == null || studentOfClassTeacher.isEmpty()) {
-                System.out.println("No students found for the selected class and section.");    
+                System.out.println("No students found for the selected class and section.");
             } else {
                 System.out.println("Found " + studentOfClassTeacher.size() + " students.");
                 for (Student s : studentOfClassTeacher) {
-                    System.out.println(s.getName() + " " + s.getRollno() + " " + s.getAge() + " " + s.getAddress() + " " + s.getPhone() + " " + s.getEmail()
+                    System.out.println(s.getName() + " " + s.getRollno() + " " + s.getAge() + " " + s.getAddress() + " "
+                            + s.getPhone() + " " + s.getEmail()
                             + " " + s.getStandard() + " " + s.getSection());
                 }
             }
@@ -173,66 +175,85 @@ public class TeacherController {
     }
 
     @GetMapping("/teacher/login/attendance/take")
-        public String showAttendanceForm(
+    public String showAttendanceForm(
             HttpSession session,
 
-            Model model
-        ) {
-            System.out.println("Inside showAttendanceForm method");
-            Teacher loggedinTeacher = (Teacher) session.getAttribute("loggedInTeacher");
-            String standard = loggedinTeacher.getClassTeacherStandard();
-            String section = loggedinTeacher.getClassTeacherSection();
-            List<Student> studentsList = studentService.getStudentsByClassAndSection(standard, section);
-            // if (studentsList == null || studentsList.isEmpty()) {
-            //     System.out.println("No students found for the selected class and section.");    
-            // } else {
-            //     System.out.println("Found " + studentsList.size() + " students.");
-            //     for (Student s : studentsList) {
-            //         System.out.println(s.getName() + " " + s.getRollno() + " " + s.getAge() + " " + s.getAddress() + " " + s.getPhone() + " " + s.getEmail()
-            //                 + " " + s.getStandard() + " " + s.getSection());
-            //     }
-            // }
-            model.addAttribute("studentsList", studentsList);
-            model.addAttribute("date", LocalDate.now());
-            return "attendancepage"; // Name of your HTML/Thymeleaf template
-        }
+            Model model) {
+        System.out.println("Inside showAttendanceForm method");
+        Teacher loggedinTeacher = (Teacher) session.getAttribute("loggedInTeacher");
+        String standard = loggedinTeacher.getClassTeacherStandard();
+        String section = loggedinTeacher.getClassTeacherSection();
+        List<Student> studentsList = studentService.getStudentsByClassAndSection(standard, section);
+        // if (studentsList == null || studentsList.isEmpty()) {
+        // System.out.println("No students found for the selected class and section.");
+        // } else {
+        // System.out.println("Found " + studentsList.size() + " students.");
+        // for (Student s : studentsList) {
+        // System.out.println(s.getName() + " " + s.getRollno() + " " + s.getAge() + " "
+        // + s.getAddress() + " " + s.getPhone() + " " + s.getEmail()
+        // + " " + s.getStandard() + " " + s.getSection());
+        // }
+        // }
+        model.addAttribute("studentsList", studentsList);
+        model.addAttribute("date", LocalDate.now());
+        return "attendancepage"; // Name of your HTML/Thymeleaf template
+    }
 
-        @PostMapping("/teacher/login/attendance/take")
-        public String submitAttendance(
-                @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                @RequestParam Map<String, String> allParams,
-                HttpSession session,
-                Model model) {
+    @PostMapping("/teacher/login/attendance/take")
+    public String submitAttendance(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam Map<String, String> allParams,
+            HttpSession session,
+            Model model) {
 
-                Teacher loggedinTeacher = (Teacher) session.getAttribute("loggedInTeacher");
-                String standard = loggedinTeacher.getClassTeacherStandard();
-                String section = loggedinTeacher.getClassTeacherSection();
-                List<Student> students = studentService.getStudentsByClassAndSection(standard, section);
+        Teacher loggedinTeacher = (Teacher) session.getAttribute("loggedInTeacher");
+        String standard = loggedinTeacher.getClassTeacherStandard();
+        String section = loggedinTeacher.getClassTeacherSection();
+        List<Student> students = studentService.getStudentsByClassAndSection(standard, section);
 
-            for (Student student : students) {
-                String key = "attendance_" + student.getRollno();
-                String status = allParams.get(key);
-                System.out.println("Key: " + key + ", Status: " + status);
-                boolean present = "present".equals(status);
+        for (Student student : students) {
+            String key = "attendance_" + student.getRollno();
+            String status = allParams.get(key);
+            System.out.println("Key: " + key + ", Status: " + status);
+            boolean present = "present".equals(status);
 
+            // Check if attendance already exists for this student and date
+            Attendance optionalAttendance = null;
+            optionalAttendance = attendanceService.getAttendanceByStudentAndDate(student, date);
 
-                // Check if attendance already exists for this student and date
-                Attendance optionalAttendance = null;
-                optionalAttendance=attendanceService.getAttendanceByStudentAndDate(student, date);
-
-                if (optionalAttendance != null) {
-                    attendanceService.deleteAttendance(optionalAttendance);
-                }
-                Attendance attendance = new Attendance();
-                attendance.setStudent(student);
-                attendance.setDate(date);
-                attendance.setPresent(present);
-                attendanceService.saveAttendance(attendance);
+            if (optionalAttendance != null) {
+                attendanceService.deleteAttendance(optionalAttendance);
             }
-
-            model.addAttribute("message", "Attendance submitted successfully!");
-            return "success"; // Or wherever you want to redirect
+            Attendance attendance = new Attendance();
+            attendance.setStudent(student);
+            attendance.setDate(date);
+            attendance.setPresent(present);
+            attendanceService.saveAttendance(attendance);
         }
 
+        model.addAttribute("message", "Attendance submitted successfully!");
+        return "success"; // Or wherever you want to redirect
+    }
+
+    @GetMapping("/admin/teachers/teacherslist/get")
+    public String getAllTeachers(@RequestParam("standard") String standard, Model model) {
+        System.out.println("Fetching teachers for standard: " + standard);
+        List<Teacher> teachers = teacherService.getTeachersByStandard(standard);
+        if (teachers == null || teachers.isEmpty()) {
+            System.out.println("No teachers found.");
+        } else {
+            System.out.println("Found " + teachers.size() + " teachers.");
+            for (Teacher t : teachers) {
+                System.out.println(t.getName() + " " + t.getEmail() + " " + t.getClassTeacherStandard() + " "
+                        + t.getClassTeacherSection());
+            }
+        }
+        model.addAttribute("teachersList", teachers);
+        return "teacherslist"; // This will render src/main/resources/templates/teacherslist.html
+    }
+    @GetMapping("/admin/teachers/teacherslist")
+    public  String getAllTeachersPage() {
+        return "teacherslist"; // This will render src/main/resources/templates/teacherslist.html
+    }
 
 }

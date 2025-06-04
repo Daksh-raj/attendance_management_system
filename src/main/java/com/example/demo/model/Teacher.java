@@ -78,6 +78,7 @@ public class Teacher {
 
     public void setClassTeacherSection(String classTeacherSection) { this.classTeacherSection = classTeacherSection; }
     public String getClassTeacherSection() { return classTeacherSection; }
+    
     public void setSubject(String subject) { this.subject = subject; }
     public String getSubject() { return subject; }
 

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exams List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts: Poppins for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #4f8cff;
+      --secondary: #ffe29f;
+      --accent: #ffb6b9;
+      --card-bg: rgba(255,255,255,0.92);
+      --card-radius: 20px;
+      --shadow: 0 8px 32px rgba(79,140,255,0.10);
+      --header-bg: rgba(255,255,255,0.45);
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(120deg, #f8ffae 0%, #43c6ac 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 10px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .header {
+      background: var(--header-bg);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      padding: 18px 32px;
+      margin-bottom: 40px;
+      color: #333;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      animation: fadeInDown 1s;
+    }
+    .header i {
+      color: var(--primary);
+      font-size: 2.1rem;
+    }
+    .exams-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      max-width: 1200px;
+      z-index: 1;
+      animation: fadeInUp 1s;
+    }
+    .exam-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px 24px 28px;
+      min-width: 300px;
+      max-width: 350px;
+      margin: 0 0 18px 0;
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid #f1f1f1;
+      animation: cardAppear 0.8s;
+      transition: transform 0.22s cubic-bezier(0.4, 2, 0.3, 1), box-shadow 0.2s;
+      /* glass effect */
+      backdrop-filter: blur(2px);
+    }
+    .exam-card:hover {
+      transform: scale(1.045) translateY(-7px);
+      box-shadow: 0 16px 40px rgba(79,140,255,0.14);
+      border: 1.5px solid var(--primary);
+    }
+    .exam-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .exam-detail {
+      font-size: 1.05rem;
+      color: #444;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .exam-detail i {
+      color: #43c6ac;
+    }
+    .exam-date {
+      font-size: 1.01rem;
+      color: #888;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .select-btn {
+      margin-top: 18px;
+      width: 100%;
+      padding: 12px 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 1.07rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 16px rgba(79,140,255,0.09);
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .select-btn:hover {
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(255,182,185,0.13);
+    }
+    @media (max-width: 900px) {
+      .exams-container {
+        gap: 18px;
+      }
+      .exam-card {
+        min-width: 85vw;
+        max-width: 95vw;
+      }
+    }
+    @media (max-width: 600px) {
+      .header {
+        font-size: 1.1rem;
+        padding: 10px 5vw;
+      }
+      .exam-card {
+        padding: 18px 10px 14px 12px;
+        min-width: 97vw;
+        max-width: 99vw;
+      }
+      .select-btn {
+        font-size: 0.97rem;
+      }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes cardAppear {
+      from { opacity: 0; transform: scale(0.96);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    /* Soft floating pastel shapes */
+    .bg-shape {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.16;
+      filter: blur(2px);
+      animation: floatBg 18s linear infinite alternate;
+    }
+    .bg-shape.one {
+      width: 240px; height: 240px;
+      top: 2%; left: 2%;
+      background: radial-gradient(circle at 60% 40%, #ffb6b9 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .bg-shape.two {
+      width: 200px; height: 200px;
+      bottom: 4%; right: 6%;
+      background: radial-gradient(circle at 40% 60%, #4f8cff 0%, transparent 70%);
+      animation-delay: 6s;
+    }
+    .bg-shape.three {
+      width: 180px; height: 180px;
+      top: 60%; left: 70%;
+      background: radial-gradient(circle at 50% 50%, #ffe29f 0%, transparent 70%);
+      animation-delay: 10s;
+    }
+    @keyframes floatBg {
+      from { transform: translateY(0) scale(1);}
+      to { transform: translateY(-30px) scale(1.06);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Soft floating pastel shapes -->
+  <div class="bg-shape one"></div>
+  <div class="bg-shape two"></div>
+  <div class="bg-shape three"></div>
+  <div class="exams-container">
+    <form th:each="exam : ${examsList}" action="/teacher/exams/subjectmarks" method="get" class="exam-card">
+      <div class="exam-title">
+        <i class="fas fa-file-alt"></i>
+        <span th:text="${exam.name}">Exam Name</span>
+      </div>
+      <div class="exam-detail">
+        <i class="fas fa-hashtag"></i>
+        <span th:text="'ID: ' + ${exam.id}">Exam id</span>
+      </div>
+      <div class="exam-detail">
+        <i class="fas fa-tag"></i>
+        <span th:text="${exam.examType}">Exam Type</span>
+      </div>
+      <div class="exam-detail">
+        <i class="fas fa-users"></i>
+        Standard <span th:text="${exam.standard}"></span> &nbsp; | &nbsp;
+        Section <span th:text="${exam.section}"></span>
+      </div>
+      <div class="exam-date">
+        <i class="fas fa-calendar-alt"></i>
+        <span th:text="${exam.examDate}">Exam Date</span>
+      </div>
+      <input type="hidden" name="examid" th:value="${exam.id}" />
+      <button class="select-btn" type="submit">
+        <i class="fas fa-arrow-right"></i> Select
+      </button>
+    </form>
+  </div>
+</body>
+</html>

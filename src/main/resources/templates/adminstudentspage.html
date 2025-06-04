@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Info Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2980b9;
+      --accent: #6dd5fa;
+      --light: #f4f8fb;
+      --dark: #2c3e50;
+      --radius: 18px;
+      --glass: rgba(255,255,255,0.65);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --icon: #7fb3d5;
+      --error: #e74c3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #dcecf9 0%, #eaf6fb 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    h2 {
+      color: var(--dark);
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      animation: fadeInDown 1.1s cubic-bezier(.77,0,.18,1);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    form {
+      background: var(--glass);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem 2rem 2rem 2rem;
+      backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(41, 128, 185, 0.10);
+      animation: popIn 1s cubic-bezier(.77,0,.18,1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.94);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 2.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .input-group .icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.15rem;
+      color: var(--icon);
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 1.1rem 1rem 1.1rem 2.5rem;
+      border: 1.5px solid #d3e0ea;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.8);
+      font-size: 1.07rem;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.2s;
+      color: var(--dark);
+      font-family: inherit;
+      outline: none;
+      box-shadow: 0 1px 2px rgba(41,128,185,0.04);
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      background: #f0f7fd;
+      box-shadow: 0 0 8px 0 rgba(41, 128, 185, 0.13);
+    }
+
+    label {
+      position: absolute;
+      left: 2.5rem;
+      top: 1.1rem;
+      background: transparent;
+      padding: 0 5px;
+      color: #7d8fa9;
+      font-size: 1.02rem;
+      pointer-events: none;
+      transition: all 0.22s cubic-bezier(.77,0,.18,1);
+      z-index: 2;
+    }
+
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      top: -0.7rem;
+      left: 2.1rem;
+      font-size: 0.86rem;
+      color: var(--primary);
+      background: var(--glass);
+      padding: 0 6px;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 6px rgba(41,128,185,0.06);
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 1.08rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 12px 0 rgba(41,128,185,0.09);
+      transition: transform 0.18s, box-shadow 0.18s;
+      margin-top: 0.5rem;
+    }
+
+    button:hover {
+      transform: scale(1.025);
+      box-shadow: 0 4px 24px 0 rgba(41,128,185,0.13);
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      background-color: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      form {
+        padding: 1.4rem 0.8rem 1.2rem 0.8rem;
+        max-width: 98vw;
+      }
+      h2 {
+        font-size: 1.35rem;
+      }
+      .input-group {
+        margin-bottom: 1.4rem;
+      }
+      button {
+        font-size: 1rem;
+      }
+    }
+
+    /* Decorative Bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(120deg, #6dd5fa 0%, #2980b9 100%);
+      opacity: 0.13;
+      z-index: 0;
+      filter: blur(2px);
+      animation: float 7s infinite alternate;
+    }
+    .bubble.b1 { width: 80px; height: 80px; left: -40px; top: -30px; animation-delay: 0s;}
+    .bubble.b2 { width: 60px; height: 60px; right: -30px; top: 40px; animation-delay: 1.5s;}
+    .bubble.b3 { width: 100px; height: 100px; left: 60%; bottom: -50px; animation-delay: 2.2s;}
+    .bubble.b4 { width: 40px; height: 40px; right: 10px; bottom: 20px; animation-delay: 3.1s;}
+    @keyframes float {
+      from { transform: translateY(0);}
+      to { transform: translateY(-18px);}
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter Student Details</h2>
+  <form method="get" action="/admin/students/studentupdaterecord/update" autocomplete="off">
+    <span class="bubble b1"></span>
+    <span class="bubble b2"></span>
+    <span class="bubble b3"></span>
+    <span class="bubble b4"></span>
+    <div class="input-group">
+      <span class="icon">
+        <!-- Roll Number Icon (FontAwesome SVG) -->
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927C9.469 2.065 10.531 2.065 10.951 2.927l1.286 2.61a1 1 0 00.753.547l2.882.418c.969.14 1.357 1.329.655 2.013l-2.084 2.03a1 1 0 00-.287.885l.492 2.87c.165.964-.849 1.7-1.722 1.246l-2.579-1.356a1 1 0 00-.931 0l-2.579 1.356c-.873.454-1.887-.282-1.722-1.246l.492-2.87a1 1 0 00-.287-.885L2.473 8.515c-.702-.684-.314-1.873.655-2.013l2.882-.418a1 1 0 00.753-.547l1.286-2.61z"/></svg>
+      </span>
+      <input type="text" id="rollno" name="rollno" required placeholder=" " autocomplete="off" />
+      <label for="rollno">Roll Number</label>
+    </div>
+    <div class="input-group">
+      <span class="icon">
+        <!-- Class Icon (FontAwesome SVG) -->
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 00-.894.553l-7 14A1 1 0 003 18h14a1 1 0 00.894-1.447l-7-14A1 1 0 0010 2zm0 3.618L15.382 16H4.618L10 5.618z"/></svg>
+      </span>
+      <input type="text" id="standard" name="standard" required placeholder=" " autocomplete="off" />
+      <label for="standard">Class</label>
+    </div>
+    <div class="input-group">
+      <span class="icon">
+        <!-- Section Icon (FontAwesome SVG) -->
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm2 0v10h12V5H4zm2 2h8v2H6V7z"/></svg>
+      </span>
+      <input type="text" id="section" name="section" required placeholder=" " autocomplete="off" />
+      <label for="section">Section</label>
+    </div>
+    <button type="submit" id="submitBtn">Update record</button>
+  </form>
+  <script>
+    // Ripple effect
+    document.getElementById('submitBtn').addEventListener('click', function(e) {
+      const btn = e.currentTarget;
+      let ripple = btn.querySelector('.ripple');
+      if (ripple) ripple.remove();
+      ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = btn.getBoundingClientRect();
+      ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+      ripple.style.left = (e.clientX - rect.left - rect.width / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - rect.height / 2) + 'px';
+      btn.appendChild(ripple);
+    });
+  </script>
+</body>
+</html>

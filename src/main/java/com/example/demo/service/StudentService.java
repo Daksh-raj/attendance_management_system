@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
+
+import jakarta.transaction.Transactional;
+
 import com.example.demo.repository.AttendanceRepository;
 
 @Service
@@ -38,6 +41,8 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    
+
     public Long deleteStudentByRollnoSectionStandard(Integer rollno, String standard, String section) {
         // Find the student first
         System.out.println("Attempting to delete student with rollno: " + rollno + ", standard: " + standard + ", section: " + section);
@@ -57,6 +62,12 @@ public class StudentService {
         studentRepository.delete(student);
 
         return 1L; // 1 student deleted
+    }
+
+    @Transactional
+    public void updateStudentInfo(String address, Integer age, String phone, String email,
+                                  String standard, String section, Integer rollno) {
+        studentRepository.updateStudentInfo(address, age, phone, email, standard, section, rollno);
     }
 
 }
