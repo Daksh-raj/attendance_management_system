@@ -243,12 +243,12 @@
     <span class="bg-shape bg-shape3"></span>
     <div class="container">
       <div class="dashboard-header">
-        <h1 th:text="'Hello, ' + ${studentName} + '!'">Hello, Student!</h1>
+        <h1 th:text="'Hello, ' + ${singleStudent.name} + '!'">Hello, Student!</h1>
         <div class="student-meta">
-          <span th:text="'Roll No: ' + ${studentRollNo}"></span> &nbsp;|&nbsp;
-          <span th:text="'Standard: ' + ${studentStandard}"></span>
+          <span th:text="'Roll No: ' + ${singleStudent.rollno}"></span> &nbsp;|&nbsp;
+          <span th:text="'Standard: ' + ${singleStudent.standard}"></span>
           &nbsp;|&nbsp;
-          <span th:text="'Section: ' + ${studentSection}"></span> &nbsp;|&nbsp;
+          <span th:text="'Section: ' + ${singleStudent.section}"></span> &nbsp;|&nbsp;
           <span th:text="'Exam: ' + ${exam.name}"></span>
         </div>
       </div>
