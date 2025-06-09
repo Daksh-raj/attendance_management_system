@@ -229,12 +229,16 @@
         font-weight: 700;
         cursor: pointer;
         transition: background 0.2s, transform 0.18s, box-shadow 0.2s;
-        box-shadow: 0 2px 12px rgba(106, 130, 251, 0.1);
+        box-shadow: 0 2px 12px rgba(32, 221, 29, 0.1);
         letter-spacing: 0.5px;
         outline: none;
         position: relative;
         overflow: hidden;
       }
+      #see-results{
+        box-shadow: 0 2px 12px rgba(19, 237, 15, 0.1);
+      }
+
       .edit-btn:after {
         content: "";
         position: absolute;
@@ -488,7 +492,7 @@
           th:value="${singleStudent.rollno}"
           class="hidden-input"
         />
-        <button class="edit-btn" onclick="editProfileAnimation(this)">
+        <button id="see-results" class="edit-btn" onclick="editProfileAnimation(this)">
         See Results..
       </button>
       </form>

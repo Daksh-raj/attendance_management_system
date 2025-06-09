@@ -12,8 +12,9 @@
       body {
         min-height: 100vh;
         margin: 0;
-        background: linear-gradient(120deg, #6a82fb 0%, #fc5c7d 100%);
+        background: linear-gradient(120deg, #f8f9fa 0%, #e6f7fa 100%);
         font-family: "Montserrat", Arial, sans-serif;
+        color: #2d3e50;
         position: relative;
         overflow-x: hidden;
       }
@@ -21,25 +22,25 @@
       .bg-shape {
         position: fixed;
         border-radius: 50%;
-        opacity: 0.13;
+        opacity: 0.12;
         z-index: 0;
         animation: floatShape 8s ease-in-out infinite alternate;
         pointer-events: none;
       }
       .bg-shape1 {
-        width: 300px;
-        height: 300px;
-        left: -90px;
-        top: -100px;
-        background: linear-gradient(135deg, #43e97b, #38f9d7);
+        width: 320px;
+        height: 320px;
+        left: -100px;
+        top: -110px;
+        background: linear-gradient(135deg, #bfa181, #178582 80%);
         animation-delay: 0s;
       }
       .bg-shape2 {
         width: 180px;
         height: 180px;
         right: -70px;
-        top: 110px;
-        background: linear-gradient(135deg, #fc5c7d, #6a82fb);
+        top: 130px;
+        background: linear-gradient(135deg, #3b86d1 0%, #178582 100%);
         animation-delay: 2s;
       }
       .bg-shape3 {
@@ -47,7 +48,7 @@
         height: 220px;
         left: 60vw;
         bottom: -80px;
-        background: linear-gradient(135deg, #38f9d7 60%, #e0e7ff 100%);
+        background: linear-gradient(135deg, #178582 60%, #e6f7fa 100%);
         animation-delay: 3.5s;
       }
       @keyframes floatShape {
@@ -65,10 +66,43 @@
         position: relative;
         z-index: 2;
       }
+      /* Back button styling */
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(90deg, #bfa181 0%, #178582 100%);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.05rem;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 22px;
+        cursor: pointer;
+        box-shadow: 0 2px 12px rgba(23,133,130,0.08);
+        margin-bottom: 24px;
+        margin-top: 14px;
+        margin-left: 6px;
+        transition: background 0.18s, box-shadow 0.18s, transform 0.13s;
+        z-index: 10;
+        position: relative;
+      }
+      .back-btn:hover, .back-btn:focus {
+        background: linear-gradient(90deg, #178582 0%, #bfa181 100%);
+        box-shadow: 0 4px 18px rgba(23,133,130,0.18);
+        outline: none;
+        transform: translateY(-2px) scale(1.03);
+      }
+      .back-btn svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+        margin-right: 2px;
+      }
       .dashboard-header {
-        background: rgba(255, 255, 255, 0.22);
-        border-radius: 22px;
-        box-shadow: 0 4px 24px rgba(106, 130, 251, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 24px;
+        box-shadow: 0 4px 24px rgba(27, 56, 88, 0.07);
         padding: 36px 32px 22px 32px;
         margin-bottom: 36px;
         text-align: center;
@@ -86,15 +120,15 @@
         }
       }
       .dashboard-header h1 {
-        color: #fff;
+        color: #0a1828;
         font-size: 2.6rem;
         font-weight: 700;
         margin: 0 0 8px 0;
         letter-spacing: 1.5px;
-        text-shadow: 0 2px 12px rgba(67, 233, 123, 0.1);
+        text-shadow: 0 2px 12px rgba(23, 133, 130, 0.08);
       }
       .dashboard-header .student-meta {
-        color: #f7f8fa;
+        color: #178582;
         font-size: 1.15rem;
         font-weight: 600;
         letter-spacing: 0.5px;
@@ -108,10 +142,9 @@
         justify-content: center;
       }
       .mark-card {
-        background: rgba(255, 255, 255, 0.17);
-        border-radius: 22px;
-        box-shadow: 0 6px 28px rgba(252, 92, 125, 0.09),
-          0 1.5px 8px rgba(67, 233, 123, 0.08);
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 28px rgba(27, 56, 88, 0.10);
         min-width: 270px;
         max-width: 320px;
         flex: 1 1 270px;
@@ -136,15 +169,23 @@
       }
       .mark-card:hover {
         transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 12px 40px rgba(252, 92, 125, 0.18),
-          0 4px 18px rgba(67, 233, 123, 0.12);
+        box-shadow: 0 12px 40px rgba(23, 133, 130, 0.18);
       }
       .subject-name {
         font-size: 1.35rem;
         font-weight: 700;
-        color: #4454a3;
+        color: #178582;
         margin-bottom: 16px;
         letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .subject-icon {
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+        fill: #bfa181;
       }
       .mark-details {
         width: 100%;
@@ -172,20 +213,21 @@
         border-radius: 16px;
         font-weight: 700;
         font-size: 1.08rem;
-        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        background: linear-gradient(90deg, #bfa181 0%, #178582 100%);
         color: #fff;
         letter-spacing: 1px;
-        box-shadow: 0 2px 8px rgba(67, 233, 123, 0.1);
+        box-shadow: 0 2px 8px rgba(23, 133, 130, 0.1);
         transition: background 0.2s;
       }
       .grade-badge.grade-A {
-        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        background: linear-gradient(90deg, #178582 0%, #3b86d1 100%);
       }
       .grade-badge.grade-B {
-        background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+        background: linear-gradient(90deg, #3b86d1 0%, #bfa181 100%);
       }
       .grade-badge.grade-C {
         background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+        color: #2d3e50;
       }
       .grade-badge.grade-D {
         background: linear-gradient(90deg, #fc5c7d 0%, #ff7e5f 100%);
@@ -233,6 +275,10 @@
         .subject-name {
           font-size: 1.07rem;
         }
+        .back-btn {
+          font-size: 0.97rem;
+          padding: 8px 14px;
+        }
       }
     </style>
   </head>
@@ -242,6 +288,11 @@
     <span class="bg-shape bg-shape2"></span>
     <span class="bg-shape bg-shape3"></span>
     <div class="container">
+      <!-- Back Button -->
+      <button class="back-btn" onclick="history.back()" aria-label="Go back to previous page">
+        <svg viewBox="0 0 20 20"><path d="M11.7 16.3a1 1 0 0 1-1.4 0l-5-5a1 1 0 0 1 0-1.4l5-5a1 1 0 1 1 1.4 1.4L7.42 10H17a1 1 0 1 1 0 2H7.42l4.28 4.3a1 1 0 0 1 0 1.4z"/></svg>
+        Back
+      </button>
       <div class="dashboard-header">
         <h1 th:text="'Hello, ' + ${studentName} + '!'">Hello, Student!</h1>
         <div class="student-meta">
@@ -254,8 +305,13 @@
       </div>
       <div class="card-grid">
         <div class="mark-card" th:each="entry,iter : ${subjectMarkMap}">
-          <div class="subject-name" th:text="${entry.key.name}">
-            Mathematics
+          <div class="subject-name">
+            <!-- Example icon, can be replaced with subject-specific SVGs -->
+            <svg class="subject-icon" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" fill="#bfa181"/>
+              <text x="12" y="17" text-anchor="middle" font-size="12" fill="#fff" font-family="Arial" font-weight="bold">S</text>
+            </svg>
+            <span th:text="${entry.key.name}">Mathematics</span>
           </div>
           <div th:if="${entry.value != null}">
             <div class="mark-details">

@@ -4,56 +4,95 @@
     <meta charset="UTF-8">
     <title>Admin Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font and Icons -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <!-- Modern Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary: #2575fc;
-            --secondary: #6a11cb;
-            --card-bg: #fff;
-            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            --radius: 22px;
-            --navbar-bg: rgba(255,255,255,0.12);
+            --primary: #8a2be2;
+            --secondary: #4b6cb7;
+            --accent: #ff7e5f;
+            --card-bg: rgba(255,255,255,0.96);
+            --glass: rgba(255,255,255,0.2);
+            --radius: 24px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.15);
             --logout: #ff4b2b;
             --logout-hover: #ff1c00;
+            --text-light: #f9f9f9;
         }
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
-        /* Floating particles for depth */
-        .particles {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 0;
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            left: 28px;
+            top: 28px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(255,126,95,0.15);
+            text-decoration: none;
+            z-index: 2;
         }
-        .particle {
+        .back-btn:hover {
+            background: #ff6a46;
+            transform: translateY(-2px);
+        }
+        .back-btn:active {
+            transform: translateY(0);
+        }
+        /* Floating animated shapes */
+        .bg-shape {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.13;
-            background: #fff;
-            animation: floatParticle 14s linear infinite;
+            opacity: 0.08;
+            filter: blur(2px);
+            z-index: 0;
+            pointer-events: none;
         }
-        @keyframes floatParticle {
-            0% { transform: translateY(0) scale(1);}
-            100% { transform: translateY(-120vh) scale(1.2);}
+        .bg-shape1 {
+            width: 200px; height: 200px;
+            top: 10%; left: 10%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            animation: floatShape 12s linear infinite;
+        }
+        .bg-shape2 {
+            width: 160px; height: 160px;
+            bottom: 10%; right: 10%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            animation: floatShape 18s linear infinite;
+            animation-delay: 6s;
+        }
+        @keyframes floatShape {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.2); }
+            100% { transform: translateY(0) scale(1); }
         }
         /* Navbar */
         .navbar {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            background: var(--navbar-bg);
-            padding: 20px 40px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            padding: 18px 40px;
             animation: slideDown 1s cubic-bezier(.77,0,.18,1);
             position: relative;
             z-index: 1;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
         }
         @keyframes slideDown {
             from { transform: translateY(-60px); opacity: 0; }
@@ -88,13 +127,14 @@
             animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1);
             position: relative;
             z-index: 1;
+            padding: 0 16px;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98);}
-            to { opacity: 1; transform: scale(1);}
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
         .title {
-            color: #fff;
+            color: var(--text-light);
             font-size: 2.8rem;
             margin-bottom: 40px;
             font-weight: 700;
@@ -103,23 +143,23 @@
             animation: popIn 1s cubic-bezier(.77,0,.18,1);
         }
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8);}
-            80% { opacity: 1; transform: scale(1.08);}
-            100% { opacity: 1; transform: scale(1);}
+            0% { opacity: 0; transform: scale(0.8); }
+            80% { opacity: 1; transform: scale(1.08); }
+            100% { opacity: 1; transform: scale(1); }
         }
         /* Card Group Grid */
         .card-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 36px;
+            gap: 32px;
             width: 100%;
             max-width: 700px;
         }
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            box-shadow: var(--card-shadow);
-            padding: 40px 30px 32px 30px;
+            box-shadow: var(--shadow);
+            padding: 36px 28px 28px 28px;
             text-align: center;
             transition: transform 0.3s cubic-bezier(.77,0,.18,1), box-shadow 0.3s, background 0.3s;
             cursor: pointer;
@@ -128,15 +168,17 @@
             animation: cardAppear 1.2s cubic-bezier(.77,0,.18,1);
             will-change: transform, box-shadow;
             outline: none;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .card:focus-visible {
-            box-shadow: 0 0 0 4px #2575fc55, var(--card-shadow);
+            box-shadow: 0 0 0 4px var(--primary), var(--shadow);
         }
         .card:nth-child(1) { animation-delay: 0.15s; }
         .card:nth-child(2) { animation-delay: 0.3s; }
         @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(40px) scale(0.96);}
-            to { opacity: 1; transform: translateY(0) scale(1);}
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .card::before {
             content: '';
@@ -145,15 +187,15 @@
             left: -60px;
             width: 120px;
             height: 120px;
-            background: radial-gradient(circle, #2575fc33 60%, transparent 100%);
+            background: radial-gradient(circle, var(--primary)33 60%, transparent 100%);
             z-index: 0;
             transition: opacity 0.3s;
             opacity: 0.7;
         }
         .card:hover {
             transform: translateY(-12px) scale(1.05) rotate(-1deg);
-            box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.22), 0 0 0 4px #2575fc22;
-            background: linear-gradient(120deg, #f8faff 80%, #e3f0ff 100%);
+            box-shadow: 0 16px 40px 0 rgba(0,0,0,0.22), 0 0 0 4px var(--primary)22;
+            background: rgba(255,255,255,0.98);
         }
         .card:hover::before {
             opacity: 1;
@@ -165,10 +207,11 @@
             animation: iconBounce 1.2s infinite alternate;
             z-index: 1;
             position: relative;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
         }
         @keyframes iconBounce {
-            0% { transform: translateY(0);}
-            100% { transform: translateY(-8px);}
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
         }
         .card-title {
             font-size: 1.35rem;
@@ -185,21 +228,21 @@
         }
         .card-link {
             display: inline-block;
-            background: linear-gradient(90deg, #2575fc 60%, #6a11cb 100%);
+            background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
             color: #fff;
             padding: 10px 22px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 500;
             transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-            box-shadow: 0 2px 8px #2575fc33;
+            box-shadow: 0 2px 8px var(--primary)33;
             position: relative;
             z-index: 1;
             margin-top: 8px;
         }
         .card-link:hover, .card-link:focus {
-            background: linear-gradient(90deg, #6a11cb 60%, #2575fc 100%);
-            box-shadow: 0 4px 16px #6a11cb55;
+            background: linear-gradient(90deg, var(--accent) 60%, var(--primary) 100%);
+            box-shadow: 0 4px 16px var(--accent)55;
             transform: scale(1.06);
         }
         /* Responsive: stack cards vertically on mobile */
@@ -211,17 +254,24 @@
             }
             .container {
                 min-height: unset;
-                margin-top: 40px;
+                margin-top: 60px;
                 padding-bottom: 24px;
             }
             .title {
                 font-size: 2rem;
+                margin-bottom: 24px;
+            }
+            .back-btn {
+                left: 16px;
+                top: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="particles"></div>
+    <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
+    <div class="bg-shape bg-shape1"></div>
+    <div class="bg-shape bg-shape2"></div>
     <div class="navbar">
         <form action="/admin/logout" method="get" style="margin:0;">
             <button type="submit" class="logout-btn">
@@ -247,19 +297,6 @@
         </div>
     </div>
     <script>
-        // Floating particles animation
-        const particles = document.querySelector('.particles');
-        for (let i = 0; i < 18; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            const size = Math.random() * 18 + 12;
-            p.style.width = p.style.height = size + 'px';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.top = (Math.random() * 100 + 20) + 'vh';
-            p.style.animationDuration = (8 + Math.random() * 8) + 's';
-            p.style.background = `rgba(255,255,255,${0.08 + Math.random() * 0.18})`;
-            particles.appendChild(p);
-        }
         // Keyboard accessibility for cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('keydown', function(e) {

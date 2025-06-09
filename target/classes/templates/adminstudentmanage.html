@@ -17,6 +17,8 @@
       --text-light: #666;
       --radius: 18px;
       --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      --back-btn: #ffffff;
+      --back-btn-hover: #e6f2ff;
     }
 
     * {
@@ -33,6 +35,32 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      background: var(--back-btn);
+      color: var(--primary);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(0,114,255,0.12);
+      text-decoration: none;
+      z-index: 2;
+    }
+    .back-btn:hover {
+      background: var(--back-btn-hover);
+      transform: translateY(-2px);
+    }
+    .back-btn:active {
+      transform: translateY(0);
     }
 
     header {
@@ -146,10 +174,15 @@
       .title {
         font-size: 2rem;
       }
+      .back-btn {
+        left: 12px;
+        top: 12px;
+      }
     }
   </style>
 </head>
 <body>
+  <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
   <div class="particles"></div>
   <header>
     <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>

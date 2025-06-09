@@ -26,9 +26,34 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 10px;
+      padding: 80px 10px 40px 10px;
       position: relative;
       overflow-x: hidden;
+    }
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      left: 32px;
+      top: 32px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(79,140,255,0.15);
+      text-decoration: none;
+      z-index: 2;
+    }
+    .back-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+    .back-btn:active {
+      transform: translateY(0);
     }
     .header {
       background: var(--header-bg);
@@ -128,11 +153,34 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      position: relative;
+      overflow: hidden;
     }
     .select-btn:hover {
       background: linear-gradient(90deg, var(--accent), var(--primary));
       transform: scale(1.04);
       box-shadow: 0 8px 32px rgba(255,182,185,0.13);
+    }
+    .select-btn:active {
+      transform: scale(0.98);
+    }
+    .select-btn::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+      z-index: 0;
+    }
+    .select-btn:active::after {
+      width: 120px;
+      height: 120px;
+      transition: 0s;
     }
     @media (max-width: 900px) {
       .exams-container {
@@ -144,6 +192,10 @@
       }
     }
     @media (max-width: 600px) {
+      .back-btn {
+        left: 16px;
+        top: 16px;
+      }
       .header {
         font-size: 1.1rem;
         padding: 10px 5vw;
@@ -199,13 +251,49 @@
       from { transform: translateY(0) scale(1);}
       to { transform: translateY(-30px) scale(1.06);}
     }
+    /* Toast Notification */
+    .toast {
+      visibility: hidden;
+      min-width: 180px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff;
+      text-align: center;
+      border-radius: 10px;
+      padding: 13px 22px;
+      position: fixed;
+      z-index: 99;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      font-size: 1em;
+      opacity: 0;
+      transition: opacity 0.4s, visibility 0.4s;
+      box-shadow: 0 2px 12px rgba(79,140,255,0.15);
+    }
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      animation: toastIn 0.5s, toastOut 0.5s 1.7s;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(30px);}
+      to { opacity: 1; transform: translateX(-50%) translateY(0);}
+    }
+    @keyframes toastOut {
+      to { opacity: 0; }
+    }
   </style>
 </head>
 <body>
+  <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
   <!-- Soft floating pastel shapes -->
   <div class="bg-shape one"></div>
   <div class="bg-shape two"></div>
   <div class="bg-shape three"></div>
+  <div class="header">
+    <i class="fas fa-graduation-cap"></i>
+    <span>Exams List</span>
+  </div>
   <div class="exams-container">
     <form th:each="exam : ${examsList}" action="/teacher/exams/subjectmarks" method="get" class="exam-card">
       <div class="exam-title">
@@ -235,5 +323,16 @@
       </button>
     </form>
   </div>
+  <div id="toast" class="toast">Exam Selected!</div>
+  <script>
+    // Toast notification for demo
+    document.querySelectorAll('.select-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1600);
+      });
+    });
+  </script>
 </body>
 </html>

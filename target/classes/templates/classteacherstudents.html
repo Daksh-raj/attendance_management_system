@@ -66,6 +66,30 @@
             0% { opacity: 0; transform: translateY(40px);}
             100% { opacity: 1; transform: translateY(0);}
         }
+        .back-btn {
+            position: absolute;
+            left: 48px;
+            top: 48px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+            text-decoration: none;
+            z-index: 2;
+        }
+        .back-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+        .back-btn:active {
+            transform: translateY(0);
+        }
         h2 {
             text-align: center;
             color: var(--primary);
@@ -232,6 +256,10 @@
             .card-grid {
                 gap: 18px;
             }
+            .back-btn {
+                left: 4vw;
+                top: 16px;
+            }
         }
         @media (max-width: 600px) {
             .container {
@@ -244,6 +272,10 @@
                 padding: 16px 10px 14px 10px;
                 min-height: 120px;
             }
+            .back-btn {
+                left: 2vw;
+                top: 8px;
+            }
         }
     </style>
 </head>
@@ -253,6 +285,7 @@
     <span class="bg-shape bg-shape2"></span>
     <span class="bg-shape bg-shape3"></span>
     <div class="container">
+        <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
         <h2>Students</h2>
         <div class="card-grid">
             <div class="student-card" th:each="student : ${studentOfClassTeacher}">

@@ -1,346 +1,341 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Add Student Marks</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Fonts: Poppins for modern look -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-    <!-- AOS for scroll animations -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-    />
-    <style>
-      :root {
-        --primary: #4f8cff;
-        --secondary: #43c6ac;
-        --accent: #ffe29f;
-        --danger: #ff6f61;
-        --card-bg: #fff;
-        --shadow: 0 8px 32px rgba(79, 140, 255, 0.1);
-        --radius: 22px;
-      }
-      body {
-        font-family: "Poppins", sans-serif;
-        background: linear-gradient(120deg, #f8ffae 0%, #43c6ac 100%);
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        overflow-x: hidden;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Student Marks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts: Poppins for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #4f8cff;
+      --secondary: #43c6ac;
+      --accent: #ffe29f;
+      --danger: #ff6f61;
+      --light: #f7fafc;
+      --card-bg: #fff;
+      --border: #dbeafe;
+      --shadow: 0 8px 32px rgba(79, 140, 255, 0.12);
+      --radius: 16px;
+      --header-bg: rgba(255,255,255,0.8);
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(120deg, #f8ffae 0%, #43c6ac 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(79,140,255,0.15);
+      text-decoration: none;
+      z-index: 2;
+    }
+    .back-btn:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+    .back-btn:active {
+      transform: translateY(0);
+    }
+    /* Header and Main Card */
+    .header {
+      background: var(--header-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      padding: 18px 32px;
+      margin: 70px 16px 24px 16px;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      animation: fadeInDown 1s;
+    }
+    .header i {
+      color: var(--primary);
+      font-size: 1.9rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      width: 90%;
+      max-width: 600px;
+      margin-bottom: 40px;
+      animation: fadeInUp 1s;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 16px 40px rgba(79,140,255,0.18);
+      transform: translateY(-4px);
+    }
+    /* Form Styles */
+    .marks-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-label {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--light);
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border: 1.5px solid var(--primary);
+      outline: none;
+      background: #fff;
+      box-shadow: 0 0 8px rgba(79,140,255,0.2);
+    }
+    /* Subject Rows */
+    .subject-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(67,198,172,0.05);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .subject-row:last-child {
+      margin-bottom: 0;
+    }
+    .subject-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 1rem;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+    .marks-field {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 120px;
+    }
+    .marks-field label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .marks-field input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-family: inherit;
+    }
+    /* Save Button */
+    .save-btn {
+      margin-top: 24px;
+      padding: 14px 36px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      align-self: center;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(79,140,255,0.12);
+    }
+    .save-btn:hover {
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px rgba(67,198,172,0.2);
+    }
+    .save-btn:active {
+      transform: scale(0.98);
+    }
+    /* Success Message */
+    .success-message {
+      color: var(--secondary);
+      font-weight: 600;
+      margin-top: 16px;
+      text-align: center;
+      animation: fadeInDown 0.8s;
+    }
+    /* Background Shapes */
+    .bg-shape {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.12;
+      filter: blur(2px);
+      animation: floatBg 18s linear infinite alternate;
+    }
+    .bg-shape.one {
+      width: 200px;
+      height: 200px;
+      top: 5%;
+      left: 5%;
+      background: radial-gradient(circle at 60% 40%, #ffb6b9 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .bg-shape.two {
+      width: 180px;
+      height: 180px;
+      bottom: 5%;
+      right: 5%;
+      background: radial-gradient(circle at 40% 60%, #4f8cff 0%, transparent 70%);
+      animation-delay: 6s;
+    }
+    .bg-shape.three {
+      width: 160px;
+      height: 160px;
+      top: 60%;
+      left: 70%;
+      background: radial-gradient(circle at 50% 50%, #ffe29f 0%, transparent 70%);
+      animation-delay: 10s;
+    }
+    @keyframes floatBg {
+      from { transform: translateY(0) scale(1); }
+      to { transform: translateY(-30px) scale(1.06); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Responsive Adjustments */
+    @media (max-width: 800px) {
       .header {
-        margin: 36px 0 24px 0;
-        color: #333;
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        animation: fadeInDown 1s;
+        font-size: 1.4rem;
+        padding: 14px 24px;
       }
-      .header i {
-        color: var(--primary);
-        font-size: 2.1rem;
-      }
-      .marks-form-container {
-        background: var(--card-bg);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 32px 18px 24px 18px;
-        width: 100%;
-        max-width: 520px;
-        margin-bottom: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .marks-form {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.96);
-        border-radius: 18px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-        padding: 24px 18px;
-        margin-bottom: 8px;
-        transition: all 0.3s ease-in-out;
-      }
-      .marks-form:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(79, 140, 255, 0.15);
-      }
-      .rollno-section {
-        display: flex;
-        flex-direction: column;
-      }
-      .rollno-label {
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--primary);
-        font-size: 1.07rem;
-      }
-      .rollno-input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1.5px solid #cbe5ff;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-family: inherit;
-        background: #f7fafc;
-        transition: border 0.2s, box-shadow 0.2s;
-      }
-      .rollno-input:focus {
-        border: 1.5px solid var(--primary);
-        outline: none;
-        background: #f0f8ff;
-        box-shadow: 0 0 8px rgba(79, 140, 255, 0.3);
-      }
-      .subjects-section {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+      .card {
+        padding: 24px 16px;
+        width: 95%;
       }
       .subject-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: stretch;
       }
-      .subject-label {
-        font-weight: 500;
-        color: #333;
-        font-size: 1.01rem;
+      .marks-field {
+        min-width: 100%;
       }
-      .marks-input {
-        width: 80px;
-        padding: 8px 10px;
-        border: 1.5px solid #cbe5ff;
-        border-radius: 7px;
-        font-size: 1rem;
-        font-family: inherit;
-        background: #f7fafc;
-        transition: border 0.2s, box-shadow 0.2s;
+    }
+    @media (max-width: 600px) {
+      .back-btn {
+        left: 12px;
+        top: 12px;
       }
-      .marks-input:focus {
-        border: 1.5px solid var(--primary);
-        outline: none;
-        background: #f0f8ff;
-        box-shadow: 0 0 6px rgba(79, 140, 255, 0.3);
+      .header {
+        font-size: 1.2rem;
+        padding: 12px 18px;
       }
-      .save-btn {
-        align-self: center;
-        margin-top: 18px;
-        padding: 14px 36px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        color: #fff;
-        font-size: 1.12rem;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        font-family: inherit;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        box-shadow: 0 4px 16px rgba(79, 140, 255, 0.09);
-        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
+      .card {
+        width: 97%;
+        padding: 18px 12px;
       }
-      .save-btn:hover {
-        background: linear-gradient(90deg, var(--secondary), var(--primary));
-        transform: scale(1.04);
-        box-shadow: 0 8px 32px rgba(67, 198, 172, 0.2);
-      }
-      .success-message {
-        color: #43c6ac;
-        font-weight: 600;
-        margin-top: 12px;
-        text-align: center;
-        animation: fadeInDown 0.8s;
-      }
-      @media (max-width: 700px) {
-        .marks-form {
-          padding: 18px 4vw;
-        }
-        .marks-form-container {
-          max-width: 96vw;
-          padding: 18px 2vw;
-        }
-        .subject-row {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
-      @keyframes fadeInDown {
-        from {
-          opacity: 0;
-          transform: translateY(-30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .bg-shape {
-        position: absolute;
-        z-index: 0;
-        opacity: 0.13;
-        filter: blur(2px);
-        animation: floatBg 18s linear infinite alternate;
-      }
-      .bg-shape.one {
-        width: 220px;
-        height: 220px;
-        top: 2%;
-        left: 2%;
-        background: radial-gradient(
-          circle at 60% 40%,
-          #ffb6b9 0%,
-          transparent 70%
-        );
-        animation-delay: 0s;
-      }
-      .bg-shape.two {
-        width: 180px;
-        height: 180px;
-        bottom: 4%;
-        right: 6%;
-        background: radial-gradient(
-          circle at 40% 60%,
-          #4f8cff 0%,
-          transparent 70%
-        );
-        animation-delay: 6s;
-      }
-      .bg-shape.three {
-        width: 160px;
-        height: 160px;
-        top: 60%;
-        left: 70%;
-        background: radial-gradient(
-          circle at 50% 50%,
-          #ffe29f 0%,
-          transparent 70%
-        );
-        animation-delay: 10s;
-      }
-      @keyframes floatBg {
-        from {
-          transform: translateY(0) scale(1);
-        }
-        to {
-          transform: translateY(-30px) scale(1.06);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Animated pastel background shapes -->
-    <div class="bg-shape one"></div>
-    <div class="bg-shape two"></div>
-    <div class="bg-shape three"></div>
-
-    <div class="header" data-aos="fade-down">
-      <i class="fas fa-user-edit"></i>
-      Add Marks for <span th:text="${selectedExam.name}">Exam Name</span>
-    </div>
-
-    <div class="marks-form-container" data-aos="zoom-in">
-      <form
-        class="marks-form"
-        action="/teacher/exams/subjectmarks/save"
-        method="post"
-        autocomplete="off"
-      >
-        <div class="rollno-section">
-          <label class="rollno-label" for="rollno"
-            ><i class="fas fa-id-badge"></i> Roll Number</label
-          >
-          <input
-            class="rollno-input"
-            type="number"
-            min="1"
-            name="rollno"
-            id="rollno"
-            required
-            placeholder="e.g. 12"
-          />
-        </div>
-        <div class="subjects-section">
-          <div class="subject-row" th:each="subject, idx : ${subjectsList}">
-            <label
-              class="subject-label"
-              th:for="'subject-' + ${idx.index}"
-              th:text="${subject.name}"
-              >Subject</label
-            >
-            <input
-              class="marks-input"
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              th:name="'marks[' + ${subject.id} + ']'"
-              th:id="'subject-' + ${idx.index}"
-              placeholder="Marks"
-              required
-            />
-            <input
-              class="marks-input"
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              th:name="'maxMarks[' + ${subject.id} + ']'"
-              placeholder="Max Marks"
-            />
-            <input
-              class="marks-input"
-              type="text"
-              maxlength="2"
-              th:name="'grade[' + ${subject.id} + ']'"
-              placeholder="Grade"
-            />
-            <input
-              class="marks-input"
-              type="text"
-              maxlength="50"
-              th:name="'remarks[' + ${subject.id} + ']'"
-              placeholder="Remarks"
-            />
+    }
+  </style>
+</head>
+<body>
+  <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
+  <!-- Background Shapes -->
+  <div class="bg-shape one"></div>
+  <div class="bg-shape two"></div>
+  <div class="bg-shape three"></div>
+  <!-- Header -->
+  <div class="header">
+    <i class="fas fa-user-edit"></i>
+    <span th:text="'Add Marks for ' + ${selectedExam.name}">Add Marks for Exam Name</span>
+  </div>
+  <!-- Main Card -->
+  <div class="card">
+    <form class="marks-form" action="/teacher/exams/subjectmarks/save" method="post" autocomplete="off">
+      <!-- Roll Number -->
+      <div class="form-group">
+        <label class="form-label" for="rollno">
+          <i class="fas fa-id-badge"></i> Roll Number
+        </label>
+        <input class="form-input" type="number" min="1" name="rollno" id="rollno" required placeholder="e.g. 12" />
+      </div>
+      <!-- Subjects -->
+      <div class="subjects-section">
+        <div class="subject-row" th:each="subject, idx : ${subjectsList}">
+          <span class="subject-name" th:text="${subject.name}">Subject Name</span>
+          <!-- Marks -->
+          <div class="marks-field">
+            <label th:for="'marks-' + ${subject.id}">Marks</label>
+            <input class="form-input" type="number" min="0" max="100" step="0.01" th:name="'marks[' + ${subject.id} + ']'" th:id="'marks-' + ${subject.id}" placeholder="Marks" required />
+          </div>
+          <!-- Max Marks -->
+          <div class="marks-field">
+            <label th:for="'maxMarks-' + ${subject.id}">Max Marks</label>
+            <input class="form-input" type="number" min="0" max="100" step="0.01" th:name="'maxMarks[' + ${subject.id} + ']'" th:id="'maxMarks-' + ${subject.id}" placeholder="Max Marks" />
+          </div>
+          <!-- Grade -->
+          <div class="marks-field">
+            <label th:for="'grade-' + ${subject.id}">Grade</label>
+            <input class="form-input" type="text" maxlength="2" th:name="'grade[' + ${subject.id} + ']'" th:id="'grade-' + ${subject.id}" placeholder="Grade" />
+          </div>
+          <!-- Remarks -->
+          <div class="marks-field">
+            <label th:for="'remarks-' + ${subject.id}">Remarks</label>
+            <input class="form-input" type="text" maxlength="50" th:name="'remarks[' + ${subject.id} + ']'" th:id="'remarks-' + ${subject.id}" placeholder="Remarks" />
           </div>
         </div>
-        <input type="hidden" name="examId" th:value="${selectedExam.id}" />
-        <button class="save-btn" type="submit">
-          <i class="fas fa-save"></i> Save Marks
-        </button>
-      </form>
-      <div
-        class="success-message"
-        th:if="${successMessage}"
-        th:text="${successMessage}"
-        data-aos="fade-down"
-      ></div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({ once: true });
-    </script>
-  </body>
+      </div>
+      <input type="hidden" name="examId" th:value="${selectedExam.id}" />
+      <button class="save-btn" type="submit">
+        <i class="fas fa-save"></i> Save Marks
+      </button>
+    </form>
+    <div class="success-message" th:if="${successMessage}" th:text="${successMessage}"></div>
+  </div>
+</body>
 </html>

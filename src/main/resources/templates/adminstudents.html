@@ -16,6 +16,8 @@
             --radius: 18px;
             --logout: #f44336;
             --logout-hover: #c62828;
+            --back-btn: #fff;
+            --back-btn-hover: #e3f0ff;
         }
         body {
             min-height: 100vh;
@@ -26,6 +28,32 @@
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
+            position: relative;
+        }
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            background: var(--back-btn);
+            color: var(--primary);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(37,117,252,0.12);
+            text-decoration: none;
+            z-index: 2;
+        }
+        .back-btn:hover {
+            background: var(--back-btn-hover);
+            transform: translateY(-2px);
+        }
+        .back-btn:active {
+            transform: translateY(0);
         }
         /* Animated background bubbles */
         .background-anim {
@@ -160,30 +188,32 @@
             h1 { font-size: 1.2em; }
             .options-grid { grid-template-columns: 1fr; gap: 16px;}
             .option-card { padding: 16px 6px 12px 6px;}
+            .back-btn { left: 12px; top: 12px; }
         }
     </style>
 </head>
 <body>
+    <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
     <canvas class="background-anim"></canvas>
     <div class="container">
         <h1>Admin Dashboard</h1>
         <div class="options-grid">
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentnewrecord">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentnewrecord'">
                 <div class="option-icon"><i class="fas fa-user-plus"></i></div>
                 <div class="option-label">Create New Record</div>
                 <a href="/admin/students/studentnewrecord" class="option-btn">Create</a>
             </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentupdaterecord">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentupdaterecord'">
                 <div class="option-icon"><i class="fas fa-user-edit"></i></div>
                 <div class="option-label">Update Existing Record</div>
                 <a href="/admin/students/studentupdaterecord" class="option-btn">Update</a>
             </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/deletestudentrecord">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/deletestudentrecord'">
                 <div class="option-icon"><i class="fas fa-user-times"></i></div>
                 <div class="option-label">Delete Record</div>
                 <a href="/admin/students/deletestudentrecord" class="option-btn">Delete</a>
             </div>
-            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentviewrecord">
+            <div class="option-card" tabindex="0" onclick="window.location.href='/admin/students/studentviewrecord'">
                 <div class="option-icon"><i class="fas fa-list"></i></div>
                 <div class="option-label">View All Records</div>
                 <a href="/admin/students/studentviewrecord" class="option-btn">View</a>
@@ -191,7 +221,7 @@
         </div>
     </div>
     <script>
-        // Animated background bubbles
+        // Animated background bubbles...
         const canvas = document.querySelector('.background-anim');
         const ctx = canvas.getContext('2d');
         let w = window.innerWidth, h = window.innerHeight;

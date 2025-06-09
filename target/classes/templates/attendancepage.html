@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <title>Attendance Page</title>
@@ -13,8 +13,10 @@
       --card-bg: #fff;
       --card-shadow: 0 4px 24px rgba(37,99,235,0.07);
       --radius: 18px;
-      --status-present: #e3fcec;
+      --status-present: #e3f7ec;
       --status-absent: #ffeaea;
+      --glass: rgba(255,255,255,0.92);
+      --shadow: 0 12px 40px rgba(37,99,235,0.13), 0 1.5px 8px rgba(14,165,233,0.07);
     }
     body {
       font-family: 'Roboto', Arial, sans-serif;
@@ -22,11 +24,75 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      position: relative;
+    }
+    /* Animated background shapes */
+    .bg-shape {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.13;
+      z-index: 0;
+      animation: floatShape 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .bg-shape1 {
+      width: 200px; height: 200px; left: -70px; top: -60px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      animation-delay: 0s;
+    }
+    .bg-shape2 {
+      width: 120px; height: 120px; right: -40px; top: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      animation-delay: 2s;
+    }
+    .bg-shape3 {
+      width: 150px; height: 150px; left: 60vw; bottom: -70px;
+      background: linear-gradient(135deg, var(--primary) 60%, #e0e7ff 100%);
+      animation-delay: 3.5s;
+    }
+    @keyframes floatShape {
+      from { transform: translateY(0);}
+      to { transform: translateY(-30px);}
     }
     .container {
       max-width: 1050px;
       margin: 48px auto;
-      padding: 32px 16px;
+      background: var(--glass);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 44px 48px 48px 48px;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(14px);
+      animation: fadeInUp 1s cubic-bezier(.39,.575,.565,1.000);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .back-btn {
+      position: absolute;
+      left: 48px;
+      top: 48px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+      text-decoration: none;
+      z-index: 2;
+    }
+    .back-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+    .back-btn:active {
+      transform: translateY(0);
     }
     h2 {
       text-align: center;
@@ -35,6 +101,12 @@
       font-size: 2.2em;
       font-weight: 700;
       letter-spacing: 1px;
+      text-shadow: 0 2px 8px #e0e4f6;
+      animation: popIn 1.2s cubic-bezier(.39,.575,.565,1.000);
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8);}
+      100% { opacity: 1; transform: scale(1);}
     }
     .attendance-grid {
       display: grid;
@@ -77,6 +149,12 @@
       user-select: none;
       letter-spacing: 2px;
       box-shadow: 0 2px 8px rgba(37,99,235,0.11);
+      animation: avatarBounce 0.9s;
+    }
+    @keyframes avatarBounce {
+      0% { transform: scale(0.7); opacity: 0; }
+      80% { transform: scale(1.12); opacity: 1;}
+      100% { transform: scale(1);}
     }
     .student-name {
       font-size: 1.17em;
@@ -180,18 +258,56 @@
       70% { transform: scale(1.3); opacity: 1; }
       100% { transform: scale(1.1); opacity: 1; }
     }
+    /* Toast notification */
+    .toast {
+      visibility: hidden;
+      min-width: 180px;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
+      color: #fff;
+      text-align: center;
+      border-radius: 10px;
+      padding: 13px 22px;
+      position: fixed;
+      z-index: 99;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%);
+      font-size: 1em;
+      opacity: 0;
+      transition: opacity 0.4s, visibility 0.4s;
+      box-shadow: 0 2px 12px rgba(37,99,235,0.15);
+    }
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      animation: toastIn 0.5s, toastOut 0.5s 1.7s;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(30px);}
+      to { opacity: 1; transform: translateX(-50%) translateY(0);}
+    }
+    @keyframes toastOut {
+      to { opacity: 0; }
+    }
     /* Responsive */
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
       .container {
-        padding: 10px 2vw 10px 2vw;
-        margin: 16px auto;
+        padding: 16px 4vw 18px 4vw;
+      }
+      .attendance-grid {
+        gap: 18px;
+      }
+      .back-btn {
+        left: 4vw;
+        top: 16px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 8px 2vw 8px 2vw;
       }
       h2 {
         font-size: 1.3em;
-      }
-      .attendance-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
       }
       .student-card {
         padding: 16px 10px 12px 10px;
@@ -201,11 +317,20 @@
         font-size: 1em;
         padding: 13px 0;
       }
+      .back-btn {
+        left: 2vw;
+        top: 8px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Animated background shapes for visual depth and harmony -->
+  <span class="bg-shape bg-shape1"></span>
+  <span class="bg-shape bg-shape2"></span>
+  <span class="bg-shape bg-shape3"></span>
   <div class="container">
+    <a href="#" onclick="history.back(); return false;" class="back-btn">← Back</a>
     <h2>Take Attendance</h2>
     <form method="post" action="/teacher/login/attendance/take" id="attendanceForm">
       <input type="hidden" name="date" th:value="${date}" />
@@ -228,8 +353,7 @@
       </div>
       <button type="submit" id="desktopSubmitBtn" class="fancy-btn fade-in">
         <span class="btn-label">Submit Attendance</span>
-        <span class="btn-icon" aria-hidden="true">
-          <svg viewBox="0 0 20 20" fill="none">
+        <span class="btn-icon" aria-hidden="true">... <svg viewBox="0 0 20 20" fill="none">
             <circle cx="10" cy="10" r="10" fill="#bbf7d0"/>
             <path d="M6 10.5l3 3 5-6" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -237,6 +361,7 @@
       </button>
     </form>
   </div>
+  <div id="toast" class="toast">Attendance Submitted!</div>
   <script>
     // Animate select on change
     document.querySelectorAll('.status-select').forEach(function(select) {
@@ -256,6 +381,8 @@
       setTimeout(function(){
         btn.querySelector('.btn-label').textContent = 'Submitted!';
         btn.classList.add('success');
+        // Show toast
+        showToast();
         setTimeout(function(){
           btn.disabled = false;
           btn.classList.remove('success');
@@ -263,6 +390,15 @@
         }, 1800);
       }, 1200);
     });
+
+    // Toast notification
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1600);
+    }
 
     // Spinner animation
     const style = document.createElement('style');
